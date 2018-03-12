@@ -326,6 +326,7 @@ namespace Courses.Entities
             public int ModuleId { get; set; }
             public string DropboxId { get; set; }
             public int ContentId { get; set; }
+            public string ContentTitle { get; set; }
 
         public CourseCountent(IDataReader dbReader)
             {
@@ -336,6 +337,7 @@ namespace Courses.Entities
                 if (dbReader.HasColumn("DropboxId") && dbReader["DropboxId"] != DBNull.Value) DropboxId = (string)dbReader["DropboxId"];
                 if (dbReader.HasColumn("ModuleId") && dbReader["ModuleId"] != DBNull.Value) ModuleId = (int)dbReader["ModuleId"];
                 if (dbReader.HasColumn("ContentId") && dbReader["ContentId"] != DBNull.Value) ContentId = (int)dbReader["ContentId"];
+                if (dbReader.HasColumn("ContentTitle") && dbReader["ContentTitle"] != DBNull.Value) ContentTitle = (string)dbReader["ContentTitle"];
 
 
 

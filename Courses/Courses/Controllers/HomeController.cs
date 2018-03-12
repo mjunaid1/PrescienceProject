@@ -13,6 +13,9 @@ using Microsoft.Owin.Security;
 using System.Net;
 using Courses.Entities;
 using System.Data;
+using System.IO;
+using Dropbox.Api.Files;
+
 
 namespace Courses.Controllers
 {
@@ -20,8 +23,125 @@ namespace Courses.Controllers
     {
         CoursesRepository Repository = new CoursesRepository();
         Students s = new Students();
+        static string remotePath; static Stream inputStream;
 
-      
+
+        public JsonResult Upload([System.Web.Http.FromBody]UploadModel model)
+        {
+            try
+            {
+                HttpPostedFileBase file = Request.Files[0]; //Uploaded file
+                string path = Request.Files.AllKeys[0];
+                //                                            //Use the following properties to get file's name, size and MIMEType
+                //int fileSize = file.ContentLength;
+                //string fileName = file.FileName;
+                //string mimeType = file.ContentType;
+                //System.IO.Stream fileContent = file.InputStream;
+                ////To save file, use SaveAs method
+                //file.SaveAs(Server.MapPath("~/") + fileName); //File will be saved in application root
+
+                inputStream = file.InputStream;
+                var fileName = Path.GetFileName(file.FileName);
+                remotePath = path +"/"+ fileName;
+
+                var task = Task.Run((Func<Task>)HomeController.Upload1);
+                task.Wait();
+
+
+                return Json("OK");
+
+            }
+            catch (Exception ex)
+            {
+                return Json("NO");
+                throw;
+              
+            }
+         
+        }
+
+
+        //[HttpPost]
+        //public ActionResult upload(UploadModel model)
+        //{
+
+          
+         
+        //    inputStream = model.File.InputStream;
+        //    var fileName = Path.GetFileName(model.File.FileName);
+         
+        //    remotePath = @"/" + fileName;
+
+        //    var task = Task.Run((Func<Task>)HomeController.Upload1);
+        //    task.Wait();
+
+
+        //    ViewBag.msg = "done";
+
+        //      return Json("Tutorial Saved", JsonRequestBehavior.AllowGet);
+        //}
+
+        static async Task Upload1()
+        {
+
+
+            using (var dbx = new DropboxClient("M9-AXilUwLAAAAAAAAAAE5oPgmq8_7-AqcHjs9K7a9UixgirDSrxt4RzeRmHEzPD"))
+            {
+                const int ChunkSize = 4096 * 1024;
+                using (var fileStream = inputStream)
+                {
+                    if (fileStream.Length <= ChunkSize)
+                    {
+                        await dbx.Files.UploadAsync(remotePath, body: fileStream);
+                        
+                    }
+                    else
+                    {
+                        await ChunkUpload(remotePath, fileStream, (int)ChunkSize);
+                    }
+                }
+               
+            }
+        }
+
+        static async Task ChunkUpload(String path, Stream stream, int chunkSize)
+        {
+            using (var dbx = new DropboxClient("M9-AXilUwLAAAAAAAAAAE5oPgmq8_7-AqcHjs9K7a9UixgirDSrxt4RzeRmHEzPD"))
+            {
+                ulong numChunks = (ulong)Math.Ceiling((double)stream.Length / chunkSize);
+                byte[] buffer = new byte[chunkSize];
+                string sessionId = null;
+                for (ulong idx = 0; idx < numChunks; idx++)
+                {
+                    var byteRead = stream.Read(buffer, 0, chunkSize);
+
+                    using (var memStream = new MemoryStream(buffer, 0, byteRead))
+                    {
+                        if (idx == 0)
+                        {
+                            var result = await dbx.Files.UploadSessionStartAsync(false, memStream);
+                            sessionId = result.SessionId;
+                        }
+                        else
+                        {
+                            var cursor = new UploadSessionCursor(sessionId, (ulong)chunkSize * idx);
+
+                            if (idx == numChunks - 1)
+                            {
+                                FileMetadata fileMetadata = await dbx.Files.UploadSessionFinishAsync(cursor, new CommitInfo(path), memStream);
+                                Console.WriteLine(fileMetadata.PathDisplay);
+                            }
+                            else
+                            {
+                                await dbx.Files.UploadSessionAppendV2Async(cursor, false, memStream);
+                            }
+                        }
+                    }
+                  
+                }
+            }
+        }
+
         public ActionResult Index()
         {
             

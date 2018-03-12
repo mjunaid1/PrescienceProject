@@ -69,7 +69,7 @@
                             <!-- Example DataTables Card-->
                             <div class="card mb-3 ">
                                 <div class="card-header">
-                                    <i class="fa fa-table "></i><span style="color:#868e96; font-weight:bold;"> Corse-Module </span> Table
+                                    <i class="fa fa-table "></i><span style="color:#868e96; font-weight:bold;"> Course-Module </span> Table
                                 </div>
                                 <div class="card-body ">
                                     <div class="table-responsive table-sm">
@@ -170,7 +170,7 @@
                             <!-- Example DataTables Card-->
                             <div class="card mb-3 ">
                                 <div class="card-header">
-                                    <i class="fa fa-table "></i><span style="color:#868e96; font-weight:bold;"> Corse-Module </span> Table
+                                    <i class="fa fa-table "></i><span style="color:#868e96; font-weight:bold;"> Course-Module </span> Table
                                 </div>
                                 <div class="card-body ">
                                     <div class="table-responsive table-sm">
@@ -224,21 +224,74 @@
                 <h4 class="modal-title">{{modalTitle}}</h4>
             </div>
             <div class="modal-body">
-                <a class="btn btn-info" href="" ng-click="uploadContent()">Upload</a>
-                <div style="margin-left:20px;" class="card-block">
-                    <br />
-                    <span ng-repeat="x in GetModuleContentDropboxApi" ng-show=" x.name.split('.').pop().toLowerCase() != 'mp4' && x.name.split('.').pop().toLowerCase() == 'pdf'"><a style="text-decoration:none;color:black;font-size:large" href="" ng-click="fileClick($event,x.path_display,x1.CourseName,x1.ModuleName,x1.ModuleId,x1.CourseId)"><i class="fa fa-file-pdf-o" aria-hidden="true" style="color:red;font-size:x-large"></i>&nbsp;  {{x.name}}</a> &nbsp; sss<span ng-repeat="x3 in GetContent" ng-if="x3.DropboxId == x.id"><i class="fa fa-check" aria-hidden="true" style="color:green;font-size:x-large"></i></span><br /> <br /></span>
-
-                    <span ng-repeat="x in GetModuleContentDropboxApi" ng-show="x.name.split('.').pop().toLowerCase() == 'mp4' && x.name.split('.').pop().toLowerCase() != 'pdf' "><a style="text-decoration:none;color:black;font-size:large" href="" ng-click="videoClick($event,x.path_display,x1.CourseName,x1.ModuleName,x1.ModuleId,x1.CourseId)"><i class="fa fa-play-circle-o" aria-hidden="true" style="color:grey;font-size:x-large"></i>&nbsp;   {{x.name}}</a> &nbsp; ss<span ng-repeat="x3 in GetContent" ng-if="x3.DropboxId == x.id"><i class="fa fa-check" aria-hidden="true" style="color:green;font-size:x-large"></i></span><br /> <br /></span>
+                <a class="btn btn-info" href="" ng-click="uploadContent()">Upload New Content</a>
+                <br /><br />
+                @*<div style="margin-left:20px;" class="card-block">
                     
+                    <span ng-repeat="x in GetModuleContentDropboxApi" ng-show=" x.name.split('.').pop().toLowerCase() != 'mp4' && x.name.split('.').pop().toLowerCase() == 'pdf'">
+            <a style="text-decoration:none;color:black;font-size:large" href="" ng-click="fileClick($event,x.path_display,x1.CourseName,x1.ModuleName,x1.ModuleId,x1.CourseId)"><i class="fa fa-file-pdf-o" aria-hidden="true" style="color:red;font-size:x-large"></i>&nbsp;  {{x.name}}</a> &nbsp; <span ng-repeat="x3 in GetContent" ng-if="x3.ContentName == x.name"><i class="fa fa-check" aria-hidden="true" style="color:green;font-size:x-large"></i></span><a href="" ng-click="AddTODB()" >Add</a> <br /> <br /></span>
+
+            <span ng-repeat="x in GetModuleContentDropboxApi" ng-show="x.name.split('.').pop().toLowerCase() == 'mp4' && x.name.split('.').pop().toLowerCase() != 'pdf' ">
+            <a style="text-decoration:none;color:black;font-size:large" href="" ng-click="videoClick($event,x.path_display,x1.CourseName,x1.ModuleName,x1.ModuleId,x1.CourseId)"><i class="fa fa-play-circle-o" aria-hidden="true" style="color:grey;font-size:x-large"></i>&nbsp;   {{x.name}}</a> &nbsp; <span ng-repeat="x3 in GetContent" ng-if="x3.ContentName == x.name"><i class="fa fa-check" aria-hidden="true" style="color:green;font-size:x-large"></i></span><a href=""ng-click="AddTODB()" >Add</a><br /> <br /></span>
+                </div>*@
+
+
+                    <div  ng-show="showtable" class="card mb-3 ">
+                        <div class="card-header">
+                            <i class="fa fa-table "></i><span style="color:#868e96; font-weight:bold;"> DROPBOX CONTENT </span> 
+                        </div>
+
+                        <div class="card-body ">
+                            <div class="table-responsive table-sm">
+                                <table class="table table-bordered table-striped" cellspacing="0">
+                                    <thead class="table-info">
+                                        <tr>
+                                          
+                                            <th>DROPBOX CONTENT NAME</th>
+                                            <th>TITLE</th>
+                                            <th>IN DATABASE</th>
+                                            <th>DATABASE ACTION</th>
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr  ng-repeat="x in GetModuleContentDropboxApi">
+
+                                           
+                                            <td ng-show=" x.name.split('.').pop().toLowerCase() != 'mp4' && x.name.split('.').pop().toLowerCase() == 'pdf'" ><a style="text-decoration:none;color:black;font-size:large" href="" ng-click="fileClick($event,x.path_display)"><i class="fa fa-file-pdf-o" aria-hidden="true" style="color:red;font-size:x-large"></i>&nbsp;  {{x.name}}</a></td>
+                                            <td ng-show="x.name.split('.').pop().toLowerCase() == 'mp4' && x.name.split('.').pop().toLowerCase() != 'pdf' "><a style="text-decoration:none;color:black;font-size:large" href="" ng-click="videoClick($event,x.path_display)"><i class="fa fa-play-circle-o" aria-hidden="true" style="color:grey;font-size:x-large"></i>&nbsp;   {{x.name}}</a></td>
+
+                                            <td ng-show=" x.name.split('.').pop().toLowerCase() != 'mp4' && x.name.split('.').pop().toLowerCase() == 'pdf'"><span ng-repeat="x3 in GetContent" ng-if="x3.ContentName == x.name">{{ x3.ContentTitle}}</span></td>
+                                            <td ng-show="x.name.split('.').pop().toLowerCase() == 'mp4' && x.name.split('.').pop().toLowerCase() != 'pdf' "><span ng-repeat="x3 in GetContent" ng-if="x3.ContentName == x.name">{{ x3.ContentTitle}}</span></td>
+
+                                            <td ng-show=" x.name.split('.').pop().toLowerCase() != 'mp4' && x.name.split('.').pop().toLowerCase() == 'pdf'"><span  ng-repeat="x3 in GetContent" ng-if="x3.ContentName == x.name"><i class="fa fa-check" aria-hidden="true" style="color:green;font-size:x-large"></i></span></td>
+                                            <td ng-show="x.name.split('.').pop().toLowerCase() == 'mp4' && x.name.split('.').pop().toLowerCase() != 'pdf' "><span ng-repeat="x3 in GetContent" ng-if="x3.ContentName == x.name"><i class="fa fa-check" aria-hidden="true" style="color:green;font-size:x-large"></i></span></td>
+
+                                            <td ng-show=" x.name.split('.').pop().toLowerCase() != 'mp4' && x.name.split('.').pop().toLowerCase() == 'pdf'"><span ng-repeat="x3 in GetContent" ng-if="x3.ContentName == x.name"><a href="" ng-click="AddTODB(x.name,x3.ContentTitle)">Add</a></span></td>
+                                            <td ng-show="x.name.split('.').pop().toLowerCase() == 'mp4' && x.name.split('.').pop().toLowerCase() != 'pdf' "><span ng-repeat="x3 in GetContent" ng-if="x3.ContentName == x.name"><a href="" ng-click="AddTODB(x.name,x3.ContentTitle)">Add</a></span></td>
+
+
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                <div class="alert alert-danger alert-block" ng-show="showerror">
+
+                    <h6 class="alert-heading">No Content Found...</h6>
+                </div>
 
                     @*<span *ngIf="false; then login">sfsf</span>*@
-                    <ng-template #login><span><a routerLink="/logout">Logout</a></span></ng-template>
-                    <ng-template #loginhj><span><a routerLink="/logout">Logout</a></span></ng-template>
-
+                 
 
                     <br /><br />
-                </div>
+               
             
             </div>
             <div class="modal-footer">
@@ -257,9 +310,31 @@
             </div>
             <div class="modal-body">
            
-                <div style="margin-left:20px;" class="card-block">
-                  
+             @using (Html.BeginForm("upload", "Home", FormMethod.Post, new { enctype = "multipart/form-data", id = "uploader5" }))
+             {
+                <label> Title NAME: </label>
+                <input  ng-model="filename" name="filename" id="filename" type="text">
+                <input  ng-model="Attachment"  name="file" id="file" type="file"><br /><br />
+
+                  <input type="button" class="btn btn-primary"   value="Upload" ng-click="submit()" name="filebtn" />
+                  <br /><br /><br />
+                <div id="isSuccess1" >
+
+                 
                 </div>
+
+                <img id="loadingImg" style="display:none" src="~/Content/Logo/loader-bar.gif" />
+                         
+             }
+                <span style="color:red;font-size:small">* File Should be in 150mb
+                <br/>
+               * Only Accept PDF OR MP4 Format 
+                </span>
+
+                @*<form id="uploader">
+                    <input id="fileInput" type="file" multiple>
+                    <input type="submit" value="Upload file" />
+                </form>*@
 
             </div>
             <div class="modal-footer">
@@ -270,6 +345,66 @@
         </script>
 
 
+        <script type="text/ng-template" id="AddToDB.html">
+
+            <div class="modal-header">
+
+                <h4 class="modal-title">{{modalTitle}}</h4>
+            </div>
+            <div class="modal-body">
+
+                    <label> Title NAME: </label>
+                    <input ng-model="titlename" name="filename" id="filename" type="text">
+                   <br /><br />
+
+                    <input type="button" class="btn btn-primary" value="Add" ng-click="add()" name="filebtn" />
+                <br /><br />
+
+                 
+                <div class="alert alert-success alert-block" ng-show="isSuccess">
+
+                    <h6 class="alert-heading">{{successMessage}}</h6>
+                </div>
+                <div class="alert alert-danger alert-block" ng-show="isError">
+                    <h6 class="alert-heading">{{errormessage}}</h6>
+                </div>
+             
+          
+
+                @*<form id="uploader">
+                    <input id="fileInput" type="file" multiple>
+                    <input type="submit" value="Upload file" />
+                </form>*@
+
+            </div>
+            <div class="modal-footer">
+                @*<button class="btn btn-primary" type="button" ng-click="">Save</button>*@
+                <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+            </div>
+
+        </script>
+
+
+
+        <script type="text/ng-template" id="myModal.html">
+            <div id="my-modal-{{id}}" click-outside="cancel()">
+                <div class="modal-header">
+                    <h3 class="modal-title">{{title}}</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="media">
+                        <video style="width:100%;height:100%;" controls autoplay ng-src="{{videoSource | trustUrl}}"></video>
+                    </div>
+
+                    @*<iframe  style="width:100%;height:100%;" ng-src="{{videoSource | trustUrl}}" ></iframe>*@
+                    @*<pre>src = {{videoSource | trustUrl}}</pre>*@
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+                    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+                </div>
+            </div>
+        </script>
     </div>
 
 

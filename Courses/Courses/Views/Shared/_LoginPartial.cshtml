@@ -6,7 +6,7 @@
         @Html.AntiForgeryToken()
 
         <ul class="nav navbar-nav navbar-right ">
-            <h2 style="margin-right:230px;color:white;">  Islamic Learning Foundation</h2>
+            <h2 style="margin-right:200px;color:white;">  Islamic Learning Foundation</h2>
             <li style="font-size:large;" >
 
                 @Html.ActionLink("Welcome " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" , style = "color: white;" })

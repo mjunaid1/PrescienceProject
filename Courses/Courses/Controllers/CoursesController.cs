@@ -605,6 +605,23 @@ namespace Courses.Controllers
             }
         }
 
+
+        
+      [HttpPost]
+        public List<EnrolledStudents> GetExamResult(CoursesModel Model)
+        {
+            try
+            {
+                CoursesRepository _searchRepository = new CoursesRepository();
+                var result = _searchRepository.GetExamResult(Model.TeacherUsername);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         // GET: api/Courses2
         public IEnumerable<string> Get()
         {

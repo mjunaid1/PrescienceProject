@@ -92,8 +92,44 @@
 
             <h1>You need to be logged in to View your courses</h1>
         }
+    <br /><br/>
+    <div ng-show="isStudent && showtbl" class="card mb-3">
+        <div class="card-header">
+            <i class="fa fa-table "></i><span style="color:#868e96; font-weight:bold;"> Students </span> Results
+        </div>
+        <br />
+        <div class="card-body">
+            <div class="table-responsive table-sm ">
+                <table class="table table-bordered table-striped" cellspacing="0">
+                    <thead class="table-info">
+                        <tr>
+                            @*<th>STUDENT USERNAME</th>*@
+                            <th>EXAM NAME</th>
+                            <th>RESULT</th>
+                            @*<th>TEACHER COMMENTS</th>*@
+                            <th>VIEW RESULT</th>
 
 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="x in getAllExamResult">
+
+
+                            @*<td>{{x.Username}}</td>*@
+                            <td>{{x.ExamName}}</td>
+                            <td>{{x.Result}}</td>
+                            @*<td>{{x.Comments}}</td>*@
+                            <td><a ng-show="x.ExamId != 0" ng-click="ViewStudentExam(x.ExamId,x.ExamName,x.Username,x.Result,x.Comments,x.ResultId,x.CourseID)" href="">View Result</a></td>
+                         
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
        
     <div ng-show="isTeacher" id="accordion" role="tablist" aria-multiselectable="true">
         <div ng-repeat="x1 in getAllSingleTeachersCourses" class="card">

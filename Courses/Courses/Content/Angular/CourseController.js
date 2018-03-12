@@ -21,6 +21,7 @@
             $scope.GetSingleUserCourses();
             $scope.GetSingleUserCourseModules();
             $scope.GetCourseProgress();
+            $scope.getExamResult();
         } else if ($scope.role == 3){
 
             $scope.getSingleTeachersCourses();
@@ -127,7 +128,7 @@
                     $http.post(resource2, data2, config).success(function (data, status) {
 
 
-                        alert(data.metadata.sharing_info.read_only);
+                     //   alert(data.metadata.sharing_info.read_only);
 
                         $log.info("videoClick", data.link)
                         $scope.open('lg', data.link);
@@ -1522,18 +1523,46 @@
 
         }
 
+
+        $scope.getAllExamResult = [];
+
+        $scope.getExamResult = function () {
+
+            var data = {
+                "TeacherUserName": $scope.UserName
+            }
+            var resource = location.protocol + "//" + location.host + "/api/Search/GetExamResult";
+
+            $http.post(resource, data).success(function (data, status) {
+                if (data == "") {
+                    $scope.showtbl = false;
+                } else {
+                    $scope.showtbl = true;
+                    $scope.getAllExamResult = data;
+                }
+               
+
+            })
+                .error(function (data, status) {
+                    // this isn't happening:
+                })
+
+
+
+        }
+
 });
 
 
-courseApp.controller('showContentModalInstanceCtrl', function ($scope, $http, $uibModal, $uibModalInstance, CourseName, ModuleName, ModuleId) {
-    $scope.modalTitle = "View Content";
+courseApp.controller('showContentModalInstanceCtrl', function ($scope, $http, $uibModal, $uibModalInstance, $log, $window, CourseName, ModuleName, ModuleId) {
+    $scope.modalTitle =  CourseName + "/" + ModuleName;
 
-    alert(ModuleId);
+   // alert(ModuleId);
 
 
     $scope.GetModuleContentDropboxApi = [];
 
-   // $scope.ShowContentModules = function (CourseName, ModuleName) {
+    $scope.ShowContentModules = function () {
 
     $scope.GetModuleContentDropboxApi = "";
     $scope.GetContent = "";
@@ -1559,27 +1588,75 @@ courseApp.controller('showContentModalInstanceCtrl', function ($scope, $http, $u
 
             $scope.GetModuleContentDropboxApi = data.entries;
 
+            if (data.entries == ""){
+
+                $scope.showtable = false;
+                $scope.showerror = true;
+            } else {
+                $scope.showerror = false;
+                $scope.showtable = true;
+            }
+
+          
+
+           
+            var data5 = {
+                ModuleId: ModuleId
+            }
 
             var resource = location.protocol + "//" + location.host + "/api/Search/selectDropboxContent_Id";
-            $http.get(resource).success(function (data1, status) {
+            $http.post(resource, data5).success(function (data1, status) {
 
 
-              
+
                 $scope.GetContent = data1;
 
-              ////  angular.forEach(data1, function (value, key) {
-              ////      if (value.ModuleId == ModuleId) {
-              ////         // if (value.DropboxId == $scope.GetModuleContentDropboxApi[key].id) {
+           angular.forEach($scope.GetModuleContentDropboxApi, function (value1, key) {
+
+                angular.forEach($scope.GetContent, function (value, key) {
+
+                    if (value.ContentName == value1.name) {
 
 
-              ////         //     alert(value.DropboxId);
-              ////       //   }
+                 //       alert(value.ContentName);
+                       }
 
-              //////      alert(value.DropboxId);
-              ////      }
+                 //   alert(value.ContentName);
+
+                });
+
+                });
+
+          //      alert("next")
+
+           angular.forEach($scope.GetContent, function (value1, key) {
+
+               angular.forEach($scope.GetModuleContentDropboxApi, function (value, key) {
+
+                   if (value1.ContentName != value.name) {
 
 
-              ////  });
+                    //   alert(value.name);
+                   }
+
+                   //   alert(value.ContentName);
+
+               });
+
+           });
+
+
+
+
+
+            });
+
+
+
+
+            });
+
+            
 
                 //angular.forEach($scope.GetModuleContentDropboxApi, function (value, key) {
 
@@ -1610,19 +1687,70 @@ courseApp.controller('showContentModalInstanceCtrl', function ($scope, $http, $u
 
 
 
-            });
+         //   });
             
-        });
+     //   });
       
        
 
 
 
 
-   // }
+    }
 
-  //  $scope.ShowContentModules(CourseName, ModuleName);
+    $scope.ShowContentModules();
 
+
+        
+
+        $scope.AddTODB = function (filename,title) {
+
+
+            var modalInstance = $uibModal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: 'AddToDB.html',
+
+                controller: 'addToDBModalInstanceCtrl',
+                windowClass: 'app-modal-window',
+                size: '',
+                resolve: {
+                    CourseName: function () {
+                        return CourseName;
+
+                    }, ModuleName: function () {
+                        return ModuleName;
+
+                    }, ModuleId: function () {
+                        return ModuleId;
+
+                    }, FileName: function () {
+                        return filename;
+
+                    }, Title: function () {
+                        return title;
+
+                    }
+
+
+                }
+            });
+
+
+
+            modalInstance.result.then(
+                function handleResolve(response) {
+
+                },
+                function handleReject(error) {
+
+                    $scope.ShowContentModules();
+                }
+            );
+
+        
+
+
+        }
 
    $scope.uploadContent = function () {
 
@@ -1634,7 +1762,16 @@ courseApp.controller('showContentModalInstanceCtrl', function ($scope, $http, $u
                 windowClass: 'app-modal-window',
                 size: '',
                 resolve: {
-                  
+                    CourseName: function () {
+                        return CourseName;
+
+                    }, ModuleName: function () {
+                        return ModuleName;
+
+                    }, ModuleId: function () {
+                        return ModuleId;
+
+                    }
 
                 }
             });
@@ -1643,19 +1780,114 @@ courseApp.controller('showContentModalInstanceCtrl', function ($scope, $http, $u
 
             modalInstance.result.then(
                 function handleResolve(response) {
-                    $scope.getExams();
+                  
                 },
                 function handleReject(error) {
-                    // alert("Alert rejected!");
+                 
+                    $scope.ShowContentModules();
                 }
             );
 
         }
 
 
+   $scope.fileClick = function ($event, fileSource) {
+
       
+
+       var config = {
+           headers: {
+               'Authorization': 'Bearer M9-AXilUwLAAAAAAAAAAE5oPgmq8_7-AqcHjs9K7a9UixgirDSrxt4RzeRmHEzPD',
+               'Content-Type': 'application/json'
+           }
+       }
+       var data2 = {
+           "path": fileSource,
+           "short_url": false
+
+
+       }
+
+
+
+       var resource2 = "https://api.dropboxapi.com/2/sharing/create_shared_link";
+       $http.post(resource2, data2, config).success(function (data, status) {
+
+
+           $window.open(
+               data.url,
+               '_blank' // <- This is what makes it open in a new window.
+           );
+
+
+
+       });
+
+
+
+
+   }
+
+
+
+   $scope.videoClick = function ($event, videoSource) {
+       // alert(cid);
+       //  alert(videoSource);
+       var config = {
+           headers: {
+               'Authorization': 'Bearer M9-AXilUwLAAAAAAAAAAE5oPgmq8_7-AqcHjs9K7a9UixgirDSrxt4RzeRmHEzPD',
+               'Content-Type': 'application/json'
+           }
+       }
+       var data2 = {
+           "path": videoSource
+
+
+       }
+
+       var resource2 = "https://api.dropboxapi.com/2/files/get_temporary_link";
+       $http.post(resource2, data2, config).success(function (data, status) {
+
+
+        //   alert(data.metadata.sharing_info.read_only);
+
+         //  alert(data.link)
+
+           $log.info("videoClick", data.link)
+           $scope.open('lg', data.link);
+
+
+
+
+
+       });
+
+
+
+
+   }
  
+   $scope.open = function (size, videoSource) {
+       $log.info("open", videoSource);
+       var modalInstance = $uibModal.open({
+           animation: $scope.animationsEnabled,
+           templateUrl: 'myModal.html',
+           controller: 'ModalInstanceCtrl',
+           backdrop: true,
+           size: size,
+           resolve: {
+               videoSource: function () {
+                   return videoSource;
+               }
+           }
+       });
 
+       modalInstance.result.then(function (result) {
+           //
+       }, function () {
+           $log.info('Modal dismissed at: ' + new Date());
+       });
+   };
 
     $scope.ok = function () {
         $uibModalInstance.close('ok');
@@ -1669,10 +1901,126 @@ courseApp.controller('showContentModalInstanceCtrl', function ($scope, $http, $u
 
 });
 
-courseApp.controller('uploadContentModalInstanceCtrl', function ($scope, $http, $uibModal, $uibModalInstance) {
+
+courseApp.controller('uploadContentModalInstanceCtrl', function ($scope, $http, $uibModal, $uibModalInstance, CourseName, ModuleName, ModuleId) {
     $scope.modalTitle = "Upload Content";
+    // alert(CourseName + " " + ModuleName + " " + ModuleId);
+    var path = "/Courses/" + CourseName + "/Modules/" + ModuleName;
+    $scope.isSuccess1 = false;
+    $scope.isError1 = false;
+    $scope.submit = function () {
+
+        //   $scope.isSuccess1 = false;
+        //   $scope.isError1 = false;
+        document.getElementById("loadingImg").style.display = "block";
+        document.getElementById('isSuccess1').innerHTML = "";
+        var data = {
+
+            name: $scope.filename
+
+        }
+
+        //  alert($scope.filename);
+        var formdata = new FormData(); //FormData object
+        var fileInput = document.getElementById('file');
+        var fullPath = document.getElementById('file').value;
+        //Iterating through each files selected in fileInput
+
+        //Appending each file to FormData object
+        formdata.append(path, fileInput.files[0]);
 
 
+        if (fullPath && $scope.filename && $scope.filename != undefined) {
+
+
+            var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
+            var filename = fullPath.substring(startIndex);
+            if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
+                filename = filename.substring(1);
+            }
+
+            var filetype = filename.split('.').pop().toLowerCase();
+
+            if (filetype == "pdf" || filetype == "mp4") {
+
+
+
+
+                //   alert(filename +" "+ filetype);
+
+
+
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/Home/Upload');
+                xhr.send(formdata);
+
+                xhr.onreadystatechange = function () {
+                    //    document.getElementById("loadingImg").style.display = "block";
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        if (xhr.responseText == "\"OK\"") {
+                            document.getElementById("loadingImg").style.display = "none";
+                            document.getElementById('isSuccess1').innerHTML = "<div  class='alert alert-success alert-block'>Successfully Upload File ...<div>";
+                            //    alert(xhr.responseText + "if");
+
+                            var data3 = {
+
+                                "ContentType": filetype,
+                                "ContentName": filename,
+                                "ContentURL": path,
+                                "ModuleId": ModuleId,
+                                "DropboxId": "",
+                                "ContentTitle": data.name
+
+                            }
+
+                            var resource3 = location.protocol + "//" + location.host + "/api/Search/InsertCourseModules_Content";
+                            $http.post(resource3, data3).success(function (data, status) {
+
+
+
+                            });
+
+
+                        } else {
+                            document.getElementById("loadingImg").style.display = "none";
+                            document.getElementById('isSuccess1').innerHTML = "<div  class='alert alert-danger alert-block'>Not Upload<div>";
+
+                        }
+
+                    }
+
+                }
+            } else {
+                document.getElementById("loadingImg").style.display = "none";
+                document.getElementById('isSuccess1').innerHTML = "<div  class='alert alert-danger alert-block'>Only Accept pdf or mp4 format ...<div>";
+            }
+
+        } else {
+            document.getElementById("loadingImg").style.display = "none";
+            document.getElementById('isSuccess1').innerHTML = "<div  class='alert alert-danger alert-block'>Required All Fields..<div>";
+        }
+
+        //var resource = "/home/upload";
+        //$http.post(resource, formdata).success(function (data, status) {
+
+
+
+
+        //    if (data == null) {
+        //        $scope.isError = true;
+        //        $scope.errormessage = "No Questions Found...";
+        //    } else {
+        //        $scope.isError = false;
+
+        //        $scope.Correct1 = data;
+        //    }
+
+
+        //    });
+
+
+
+    }
 
 
 
@@ -1687,6 +2035,212 @@ courseApp.controller('uploadContentModalInstanceCtrl', function ($scope, $http, 
     };
 
 });
+
+courseApp.controller('addToDBModalInstanceCtrl', function ($scope, $http, $uibModal, $uibModalInstance, CourseName, ModuleName, ModuleId, FileName,Title) {
+    $scope.modalTitle = "Add To Database";
+   
+    $scope.titlename = Title;
+    $scope.add = function () {
+
+        $scope.isSuccess = false;
+        $scope.isError = false;
+
+        if ($scope.titlename && $scope.titlename != undefined && $scope.titlename != null)
+        {
+            var title = $scope.titlename;
+            var filetype = FileName.split('.').pop().toLowerCase();
+
+            var path1 = "/Courses/" + CourseName + "/Modules/" + ModuleName;
+            var data3 = {
+
+                "ContentType": filetype,
+                "ContentName": FileName,
+                "ContentURL": path1,
+                "ModuleId": ModuleId,
+                "DropboxId": "",
+                "ContentTitle": title
+
+            }
+
+            var resource3 = location.protocol + "//" + location.host + "/api/Search/InsertCourseModules_Content";
+            $http.post(resource3, data3).success(function (data, status) {
+
+                if (data == true) {
+
+                    $scope.isError = false;
+                    $scope.isSuccess = true;
+
+                    $scope.successMessage = "Successfully Added...."
+                } else {
+                    $scope.isSuccess = false;
+                    $scope.isError = true;
+                   
+                    $scope.errormessage = "Try Again";
+                }
+
+            });
+
+
+        } else {
+
+            $scope.isSuccess = false;
+            $scope.isError = true;
+
+            $scope.errormessage = "Enter Your Title...";
+        }
+
+          
+
+    };
+
+
+      
+
+
+    $scope.ok = function () {
+        $uibModalInstance.close('ok');
+    };
+
+
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+
+});
+
+//courseApp.controller('uploadContentModalInstanceCtrl', function ($scope, $http, $uibModal, $uibModalInstance, CourseName, ModuleName, ModuleId) {
+//    $scope.modalTitle = "Upload Content";
+//   // alert(CourseName + " " + ModuleName + " " + ModuleId);
+//    var path = "/Courses/" + CourseName + "/Modules/" + ModuleName;
+//    $scope.isSuccess1 = false;
+//    $scope.isError1 = false;
+//    $scope.submit = function () {
+
+//        //   $scope.isSuccess1 = false;
+//        //   $scope.isError1 = false;
+//        document.getElementById("loadingImg").style.display = "block";
+//        document.getElementById('isSuccess1').innerHTML = "";
+//        var data = {
+
+//            name: $scope.filename
+
+//        }
+
+//      //  alert($scope.filename);
+//        var formdata = new FormData(); //FormData object
+//        var fileInput = document.getElementById('file');
+//        var fullPath = document.getElementById('file').value;
+//        //Iterating through each files selected in fileInput
+
+//        //Appending each file to FormData object
+//        formdata.append(path, fileInput.files[0]);
+       
+
+//        if (fullPath && $scope.filename && $scope.filename != undefined) {
+
+
+//           var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
+//           var filename = fullPath.substring(startIndex);
+//           if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
+//               filename = filename.substring(1);
+//           }
+
+//           var filetype = filename.split('.').pop().toLowerCase();
+
+//           if (filetype == "pdf" || filetype == "mp4") {
+
+
+
+
+//               //   alert(filename +" "+ filetype);
+
+
+
+//               var xhr = new XMLHttpRequest();
+//               xhr.open('POST', '/Home/Upload');
+//                  xhr.send(formdata);
+
+//               xhr.onreadystatechange = function () {
+//                   //    document.getElementById("loadingImg").style.display = "block";
+//                   if (xhr.readyState == 4 && xhr.status == 200) {
+//                       if (xhr.responseText == "\"OK\"") {
+//                           document.getElementById("loadingImg").style.display = "none";
+//                           document.getElementById('isSuccess1').innerHTML = "<div  class='alert alert-success alert-block'>Successfully Upload File ...<div>";
+//                           //    alert(xhr.responseText + "if");
+
+//                           var data3 = {
+
+//                               "ContentType": filetype,
+//                               "ContentName": filename,
+//                               "ContentURL": path,
+//                               "ModuleId": ModuleId,
+//                               "DropboxId": "",
+//                               "ContentTitle": data.name
+
+//                           }
+
+//                           var resource3 = location.protocol + "//" + location.host + "/api/Search/InsertCourseModules_Content";
+//                           $http.post(resource3, data3).success(function (data, status) {
+
+
+
+//                           });
+
+
+//                       } else {
+//                           document.getElementById("loadingImg").style.display = "none";
+//                           document.getElementById('isSuccess1').innerHTML = "<div  class='alert alert-danger alert-block'>Not Upload<div>";
+
+//                       }
+
+//                   }
+
+//               }
+//           } else {
+//               document.getElementById("loadingImg").style.display = "none";
+//               document.getElementById('isSuccess1').innerHTML = "<div  class='alert alert-danger alert-block'>Only Accept pdf or mp4 format ...<div>";
+//           }
+
+//       } else {
+//           document.getElementById("loadingImg").style.display = "none";
+//           document.getElementById('isSuccess1').innerHTML = "<div  class='alert alert-danger alert-block'>Required All Fields..<div>";
+//       }
+
+//        //var resource = "/home/upload";
+//        //$http.post(resource, formdata).success(function (data, status) {
+
+
+
+
+//        //    if (data == null) {
+//        //        $scope.isError = true;
+//        //        $scope.errormessage = "No Questions Found...";
+//        //    } else {
+//        //        $scope.isError = false;
+
+//        //        $scope.Correct1 = data;
+//        //    }
+
+
+//        //    });
+
+      
+
+//    }
+
+
+
+
+//    $scope.ok = function () {
+//        $uibModalInstance.close('ok');
+//    };
+
+
+//    $scope.cancel = function () {
+//        $uibModalInstance.dismiss('cancel');
+//    };
+
+//});
 
 
 

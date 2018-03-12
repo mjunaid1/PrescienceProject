@@ -1831,11 +1831,27 @@ namespace Courses.DataAccess
                     cmd.Parameters.Add("@ContentURL", SqlDbType.NVarChar).Value = Model.ContentURL;
                     cmd.Parameters.Add("@ModuleId", SqlDbType.Int).Value = Model.ModuleId;
                     cmd.Parameters.Add("@DropboxId", SqlDbType.NVarChar).Value = Model.DropboxId;
-
+                    //cmd.Parameters.Add("@Title", SqlDbType.NVarChar).Value = Model.ContentTitle;
 
                     cmd.ExecuteNonQuery();
 
-                }
+
+            
+                     
+                    string qry12 = "update CourseContent set [ContentTitle] = '" + Model.ContentTitle + "' where  [ContentType] = '" + Model.ContentType + "' and ContentName = '"+ Model.ContentName + "' and ContentURL = '"+Model.ContentURL+ "'and ModuleId = "+ Model.ModuleId;
+
+                    using (var cmd2 = new SqlCommand(qry12, conn))
+                        {
+                            cmd2.CommandType = CommandType.Text;
+                            cmd2.ExecuteNonQuery();
+                          
+                        }
+                    }
+
+                
+
+
+
 
                 return true;
             }
@@ -1952,8 +1968,39 @@ namespace Courses.DataAccess
                 }
             }
         }
+        
+        public List<EnrolledStudents> GetExamResult(string Username)
+        {
+            using (var conn = new SqlConnection(CoursesConnectionString))
+            {
+                conn.Open();
+                string qry = "select r.resultId, ce.courseId, r.ExamId , (select ExamName from Exam where Exam.ExamId = r.ExamId) as 'ExamName', r.StudentUserName as 'Username' , r.Result,r.Comments  from CourseExam ce inner join [StudentExamResults] r on r.ExamId = ce.ExamId where r.StudentUserName = '"+ Username + "'";
+                using (var cmd = new SqlCommand(qry, conn))
+                {
+                    cmd.CommandType = CommandType.Text;
 
-
+                    List<EnrolledStudents> data = new List<EnrolledStudents>();
+                    //var myReader = cmd.ExecuteReader();
+                    using (var myReader = cmd.ExecuteReader())
+                    {
+                        try
+                        {
+                            while (myReader.Read())
+                            {
+                                var get = new EnrolledStudents(myReader);
+                                data.Add(get);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            // LOG ERROR
+                            throw ex;
+                        }
+                    }
+                    return data;
+                }
+            }
+        }
 
         static async Task Run()
         {
