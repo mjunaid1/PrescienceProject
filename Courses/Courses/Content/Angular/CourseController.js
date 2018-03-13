@@ -1431,6 +1431,14 @@
                     },
                     Courseid: function () {
                         return courseid;
+                    },
+                    CheckUser: function () {
+                        if($scope.role == 2 ){
+                            return "student";
+                        } else if ($scope.role == 3) {
+                            return "teacher";
+                        }
+                      
                     }
 
                 }
@@ -2976,11 +2984,11 @@ courseApp.controller('viewQuesModalInstanceCtrl', function ($scope, $http, $uibM
 
 });
 
-courseApp.controller('viewStudentExamModalInstanceCtrl', function ($scope, $http, $uibModal, $uibModalInstance, ExamId, ExamName, Username, Result, Comments, Resultid, Courseid) {
+courseApp.controller('viewStudentExamModalInstanceCtrl', function ($scope, $http, $uibModal, $uibModalInstance, ExamId, ExamName, Username, Result, Comments, Resultid, Courseid, CheckUser) {
     $scope.modalTitle = "View Result (" + ExamName + ")";
 
     $scope.comm = false;
-
+    $scope.check = CheckUser;
     $scope.comments = Comments;
 
 
@@ -3113,10 +3121,10 @@ courseApp.controller('viewStudentExamModalInstanceCtrl', function ($scope, $http
 
 
 
-    //$scope.cancel = function () {
-    //  //  $uibModalInstance.dismiss('cancel', 40);
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
     //    $uibModalInstance.close({ locations: 4568 });
-    //};
+    };
 
 });
 

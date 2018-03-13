@@ -231,17 +231,20 @@
 
             </ul>
 
-            <form ng-show="comm">
+            <form ng-show="comm && check == 'teacher'">
+                
                 <textarea ng-model="comments" class="form-control" placeholder="Add Comment" style="width:100%" ></textarea>
                 <br />
                 @*<a href="" ng-click="" class="btn btn-success">Save</a>*@
             </form>
-
+            <label ng-show="check == 'student'">Teacher Comments:</label>
+            <textarea ng-show="check == 'student'" readonly ng-model="comments" class="form-control" placeholder="Add Comment" style="width:100%"></textarea>
 
         </div>
         <div class="modal-footer">
             @*<button class="btn btn-primary" type="button" ng-click="">Save</button>*@
-            <button class="btn btn-success" type="button" ng-click="UpdateComment()">Save</button>
+            <button ng-show="check == 'teacher'"  class="btn btn-success" type="button" ng-click="UpdateComment()">Save</button>
+            <button ng-show="check == 'student'" class="btn btn-warning" type="button" ng-click="cancel()"  >Cancel</button>
         </div>
 
     </script>
