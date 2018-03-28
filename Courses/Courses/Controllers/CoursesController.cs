@@ -622,6 +622,20 @@ namespace Courses.Controllers
             }
         }
 
+        [HttpPost]
+        public bool DeleteCourses([FromBody] CoursesModel Model)
+        {
+            try
+            {
+                CoursesRepository _searchRepository = new CoursesRepository();
+                var result = _searchRepository.DeleteCourses(Model);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
         // GET: api/Courses2
         public IEnumerable<string> Get()
         {

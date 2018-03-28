@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewBag.Title = "DeleteCourses";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/Home/Index">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Delete Courses</li>
+    </ol>
+
+ 
+
+
+    <div class="row">
+        <div class="col-12">
+            <h1 style="color:rgb(53, 53, 53); font-weight:bold;">DELETE COURSES</h1>
+
+         <br />
+            <a href="" ng-click="deleteCourses(true)" class="btn btn-primary" >Delete All Courses</a>
+            <br /><br />
+
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fa fa-table "></i><span style="color:#868e96; font-weight:bold;"> Courses </span> Table 
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive table-sm ">
+                        <table class="table table-striped table-bordered" cellspacing="0">
+                            <thead class="table-info">
+                                <tr>
+                                    <th>COURSE NAME</th>
+                                    <th>ACTION</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="x in getAllCourses">
+
+
+                                    <td>{{x.CourseName}}</td>
+                                    <td><a href="" ng-click="deleteCourses(false,x.CourseName,x.CourseID)" >Delete</a></td>
+                                 
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+

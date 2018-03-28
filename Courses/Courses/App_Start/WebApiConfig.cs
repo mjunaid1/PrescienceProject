@@ -17,6 +17,11 @@ namespace Courses
             //    defaults: new { id = RouteParameter.Optional }
             //);
 
+            config.Routes.MapHttpRoute(
+                name: "GetDropboxKey",
+                 routeTemplate: "api/Search/GetDropboxKey",
+                     defaults: new { controller = "Dropbox", action = "GetDropboxKey" }
+         );
 
             config.Routes.MapHttpRoute(
                      name: "AddCourse",
@@ -267,6 +272,12 @@ namespace Courses
                 defaults: new { controller = "Courses", action = "GetExamResult" }
                 );
 
+            
+                config.Routes.MapHttpRoute(
+                name: "DeleteCourses",
+                routeTemplate: "api/Search/DeleteCourses",
+                defaults: new { controller = "Courses", action = "DeleteCourses" }
+                );
             //config.Routes.MapHttpRoute(
             //  name: "getCourses",
             //   routeTemplate: "api/Search/getCourses",

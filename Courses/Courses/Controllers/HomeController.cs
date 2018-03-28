@@ -15,7 +15,7 @@ using Courses.Entities;
 using System.Data;
 using System.IO;
 using Dropbox.Api.Files;
-
+using System.Configuration;
 
 namespace Courses.Controllers
 {
@@ -85,7 +85,8 @@ namespace Courses.Controllers
         {
 
 
-            using (var dbx = new DropboxClient("M9-AXilUwLAAAAAAAAAAE5oPgmq8_7-AqcHjs9K7a9UixgirDSrxt4RzeRmHEzPD"))
+            var key = ConfigurationManager.AppSettings["DropboxKey"];
+            using (var dbx = new DropboxClient(key))
             {
                 const int ChunkSize = 4096 * 1024;
                 using (var fileStream = inputStream)
@@ -106,7 +107,8 @@ namespace Courses.Controllers
 
         static async Task ChunkUpload(String path, Stream stream, int chunkSize)
         {
-            using (var dbx = new DropboxClient("M9-AXilUwLAAAAAAAAAAE5oPgmq8_7-AqcHjs9K7a9UixgirDSrxt4RzeRmHEzPD"))
+            var key = ConfigurationManager.AppSettings["DropboxKey"];
+            using (var dbx = new DropboxClient(key))
             {
                 ulong numChunks = (ulong)Math.Ceiling((double)stream.Length / chunkSize);
                 byte[] buffer = new byte[chunkSize];
@@ -187,6 +189,37 @@ namespace Courses.Controllers
                 return RedirectToAction("Login", "Account");
 
             }
+        }
+
+        public ActionResult DeleteCourses()
+        {
+
+            if (Request.IsAuthenticated)
+            {
+
+                s.Username = @User.Identity.GetUserName();
+
+                var r = Repository.CheckUser(s);
+
+
+                if (r.Role == 1)
+                {
+                    ViewBag.role = r.Role;
+                    return View();
+                }
+                else
+                    return RedirectToAction("Index", "Home");
+
+
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+
+            }
+
+
+
         }
 
         public ActionResult Contact()
@@ -581,8 +614,8 @@ namespace Courses.Controllers
 
         static async Task Run(int id)
         {
-            using (var dbx = new DropboxClient("M9-AXilUwLAAAAAAAAAAE5oPgmq8_7-AqcHjs9K7a9UixgirDSrxt4RzeRmHEzPD"))
-            {
+            var key = ConfigurationManager.AppSettings["DropboxKey"];
+            using (var dbx = new DropboxClient(key)) { 
                 string data = null;
 
      //           var list = await dbx.Files.ListFolderAsync();

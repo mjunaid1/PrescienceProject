@@ -1,6 +1,7 @@
 ﻿courseApp.controller("courseController", function courseController($scope, $window, $http, $filter, $timeout, $log, $uibModal) {
     $scope.Author = "Umais Siddiqui";
     $scope.UserName = "";
+    $scope.DropboxKey = "";
     $scope.role = [];
     $scope.test = function () { alert("Testing"); };
     var promise = $timeout(function () {
@@ -85,8 +86,13 @@
     $scope.getUsersRole();
 
     
+    var resource = location.protocol + "//" + location.host + "/api/Search/GetDropboxKey";
 
-
+    $http.get(resource).success(function (data, status) {
+        $scope.DropboxKey = data;
+      
+    })
+     
     $scope.open = function (size, videoSource) {
         $log.info("open", videoSource);
         var modalInstance = $uibModal.open({
@@ -112,9 +118,10 @@
     $scope.videoClick = function ($event, videoSource,c,m,i,cid) {
        // alert(cid);
       //  alert(videoSource);
+     //   alert($scope.DropboxKey);
         var config = {
             headers: {
-                'Authorization': 'Bearer M9-AXilUwLAAAAAAAAAAE5oPgmq8_7-AqcHjs9K7a9UixgirDSrxt4RzeRmHEzPD',
+                'Authorization': 'Bearer ' + $scope.DropboxKey,
                 'Content-Type': 'application/json'
             }
         }
@@ -167,12 +174,12 @@
 
 
     $scope.fileClick = function ($event, fileSource,c,m,i,cid) {
-
+       // alert($scope.DropboxKey);
         var name = "";
       
         var config = {
             headers: {
-                'Authorization': 'Bearer M9-AXilUwLAAAAAAAAAAE5oPgmq8_7-AqcHjs9K7a9UixgirDSrxt4RzeRmHEzPD',
+                'Authorization': 'Bearer ' + $scope.DropboxKey,
                 'Content-Type': 'application/json'
             }
         }
@@ -814,7 +821,7 @@
         $scope.GetModuleContentDropboxApi = [];
 
         $scope.ShowContentModules = function (CourseName, Modulename, ModuleId) {
-
+        //    alert();
             $scope.GetModuleContentDropboxApi = "";
         
             var length;
@@ -823,7 +830,7 @@
 
             var config = {
                 headers: {
-                    'Authorization': 'Bearer M9-AXilUwLAAAAAAAAAAE5oPgmq8_7-AqcHjs9K7a9UixgirDSrxt4RzeRmHEzPD',
+                    'Authorization': 'Bearer ' + $scope.DropboxKey,
                     'Content-Type': 'application/json'
                 }
             }
@@ -1069,10 +1076,19 @@
         $scope.getAllExamsPerCourse = [];
 
         $scope.getExamsPerCourse = function () {
-
+            var key;
             var CourseId = $('#coursid').val();
        //     alert(CourseId);
             if (CourseId != undefined) {
+               
+                var resource = location.protocol + "//" + location.host + "/api/Search/GetDropboxKey";
+
+                $http.get(resource).success(function (data, status) {
+                    key = data;
+                    
+                
+            
+
                 var resource = location.protocol + "//" + location.host + "/api/Search/getExamsPerCourse";
 
                 $http.post(resource, CourseId).success(function (data, status) {
@@ -1137,7 +1153,7 @@
 
                 var config = {
                     headers: {
-                        'Authorization': 'Bearer M9-AXilUwLAAAAAAAAAAE5oPgmq8_7-AqcHjs9K7a9UixgirDSrxt4RzeRmHEzPD',
+                        'Authorization': 'Bearer ' + key,
                         'Content-Type': 'application/json'
                     }
                 }
@@ -1242,7 +1258,7 @@
 
                 });
 
-
+                })
 
             } else {
       //          alert("fs");
@@ -1513,6 +1529,9 @@
                     }, ModuleId: function () {
                         return moduleid;
 
+                    }, DropboxKey: function () {
+                        return $scope.DropboxKey;
+
                     }
 
                 }
@@ -1559,14 +1578,91 @@
 
         }
 
+        $scope.deleteCourses = function (check,CourseName,CourseId) {
+
+          //  alert(CourseId);
+
+            if (CourseName == undefined){
+
+                CourseName = "";
+                var path = "/Courses";
+               
+            } else {
+                var path = "/Courses/" + CourseName;
+
+            }
+           
+          //  alert(courseId + " " + CourseName);
+
+            function deleteCourseFromDropbox() {
+
+              //  alert($scope.DropboxKey);
+
+                var config = {
+                    headers: {
+                        'Authorization': 'Bearer ' + $scope.DropboxKey,
+                        'Content-Type': 'application/json'
+                    }
+                }
+
+               
+
+                var data1 = {
+                    "path": path
+
+
+                }
+                var resource1 = "https://api.dropboxapi.com/2/files/delete_v2";
+                if (window.confirm("Are you sure to Delete Course ?")) {
+                    $http.post(resource1, data1, config).success(function (data, status) {
+
+                        //        if (data.metadata.path_display == path) {
+
+                   
+
+
+                      
+
+
+
+                        //     } 
+
+                    });
+
+                    var data = {
+                        "CourseID": CourseId,
+                        "deleteall": check,
+                        "CourseName": CourseName
+                    }
+                    var resource = location.protocol + "//" + location.host + "/api/Search/DeleteCourses";
+
+                    $http.post(resource, data).success(function (data, status) {
+                        if (data == true) {
+
+                            $scope.getCourses();
+
+                        } else {
+
+                        }
+
+
+                    })
+                }
+            }
+            deleteCourseFromDropbox();
+
+
+        }
+
+
 });
 
 
-courseApp.controller('showContentModalInstanceCtrl', function ($scope, $http, $uibModal, $uibModalInstance, $log, $window, CourseName, ModuleName, ModuleId) {
+courseApp.controller('showContentModalInstanceCtrl', function ($scope, $http, $uibModal, $uibModalInstance, $log, $window, CourseName, ModuleName, ModuleId,DropboxKey) {
     $scope.modalTitle =  CourseName + "/" + ModuleName;
 
    // alert(ModuleId);
-
+   // alert(DropboxKey);
 
     $scope.GetModuleContentDropboxApi = [];
 
@@ -1578,7 +1674,7 @@ courseApp.controller('showContentModalInstanceCtrl', function ($scope, $http, $u
 
         var config = {
             headers: {
-                'Authorization': 'Bearer M9-AXilUwLAAAAAAAAAAE5oPgmq8_7-AqcHjs9K7a9UixgirDSrxt4RzeRmHEzPD',
+                'Authorization': 'Bearer ' + DropboxKey,
                 'Content-Type': 'application/json'
             }
         }
@@ -1801,11 +1897,11 @@ courseApp.controller('showContentModalInstanceCtrl', function ($scope, $http, $u
 
    $scope.fileClick = function ($event, fileSource) {
 
-      
+   //    alert(DropboxKey);
 
        var config = {
            headers: {
-               'Authorization': 'Bearer M9-AXilUwLAAAAAAAAAAE5oPgmq8_7-AqcHjs9K7a9UixgirDSrxt4RzeRmHEzPD',
+               'Authorization': 'Bearer ' + DropboxKey,
                'Content-Type': 'application/json'
            }
        }
@@ -1841,9 +1937,10 @@ courseApp.controller('showContentModalInstanceCtrl', function ($scope, $http, $u
    $scope.videoClick = function ($event, videoSource) {
        // alert(cid);
        //  alert(videoSource);
+    //   alert(DropboxKey);
        var config = {
            headers: {
-               'Authorization': 'Bearer M9-AXilUwLAAAAAAAAAAE5oPgmq8_7-AqcHjs9K7a9UixgirDSrxt4RzeRmHEzPD',
+               'Authorization': 'Bearer ' + DropboxKey,
                'Content-Type': 'application/json'
            }
        }
@@ -2115,141 +2212,6 @@ courseApp.controller('addToDBModalInstanceCtrl', function ($scope, $http, $uibMo
     };
 
 });
-
-//courseApp.controller('uploadContentModalInstanceCtrl', function ($scope, $http, $uibModal, $uibModalInstance, CourseName, ModuleName, ModuleId) {
-//    $scope.modalTitle = "Upload Content";
-//   // alert(CourseName + " " + ModuleName + " " + ModuleId);
-//    var path = "/Courses/" + CourseName + "/Modules/" + ModuleName;
-//    $scope.isSuccess1 = false;
-//    $scope.isError1 = false;
-//    $scope.submit = function () {
-
-//        //   $scope.isSuccess1 = false;
-//        //   $scope.isError1 = false;
-//        document.getElementById("loadingImg").style.display = "block";
-//        document.getElementById('isSuccess1').innerHTML = "";
-//        var data = {
-
-//            name: $scope.filename
-
-//        }
-
-//      //  alert($scope.filename);
-//        var formdata = new FormData(); //FormData object
-//        var fileInput = document.getElementById('file');
-//        var fullPath = document.getElementById('file').value;
-//        //Iterating through each files selected in fileInput
-
-//        //Appending each file to FormData object
-//        formdata.append(path, fileInput.files[0]);
-       
-
-//        if (fullPath && $scope.filename && $scope.filename != undefined) {
-
-
-//           var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
-//           var filename = fullPath.substring(startIndex);
-//           if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
-//               filename = filename.substring(1);
-//           }
-
-//           var filetype = filename.split('.').pop().toLowerCase();
-
-//           if (filetype == "pdf" || filetype == "mp4") {
-
-
-
-
-//               //   alert(filename +" "+ filetype);
-
-
-
-//               var xhr = new XMLHttpRequest();
-//               xhr.open('POST', '/Home/Upload');
-//                  xhr.send(formdata);
-
-//               xhr.onreadystatechange = function () {
-//                   //    document.getElementById("loadingImg").style.display = "block";
-//                   if (xhr.readyState == 4 && xhr.status == 200) {
-//                       if (xhr.responseText == "\"OK\"") {
-//                           document.getElementById("loadingImg").style.display = "none";
-//                           document.getElementById('isSuccess1').innerHTML = "<div  class='alert alert-success alert-block'>Successfully Upload File ...<div>";
-//                           //    alert(xhr.responseText + "if");
-
-//                           var data3 = {
-
-//                               "ContentType": filetype,
-//                               "ContentName": filename,
-//                               "ContentURL": path,
-//                               "ModuleId": ModuleId,
-//                               "DropboxId": "",
-//                               "ContentTitle": data.name
-
-//                           }
-
-//                           var resource3 = location.protocol + "//" + location.host + "/api/Search/InsertCourseModules_Content";
-//                           $http.post(resource3, data3).success(function (data, status) {
-
-
-
-//                           });
-
-
-//                       } else {
-//                           document.getElementById("loadingImg").style.display = "none";
-//                           document.getElementById('isSuccess1').innerHTML = "<div  class='alert alert-danger alert-block'>Not Upload<div>";
-
-//                       }
-
-//                   }
-
-//               }
-//           } else {
-//               document.getElementById("loadingImg").style.display = "none";
-//               document.getElementById('isSuccess1').innerHTML = "<div  class='alert alert-danger alert-block'>Only Accept pdf or mp4 format ...<div>";
-//           }
-
-//       } else {
-//           document.getElementById("loadingImg").style.display = "none";
-//           document.getElementById('isSuccess1').innerHTML = "<div  class='alert alert-danger alert-block'>Required All Fields..<div>";
-//       }
-
-//        //var resource = "/home/upload";
-//        //$http.post(resource, formdata).success(function (data, status) {
-
-
-
-
-//        //    if (data == null) {
-//        //        $scope.isError = true;
-//        //        $scope.errormessage = "No Questions Found...";
-//        //    } else {
-//        //        $scope.isError = false;
-
-//        //        $scope.Correct1 = data;
-//        //    }
-
-
-//        //    });
-
-      
-
-//    }
-
-
-
-
-//    $scope.ok = function () {
-//        $uibModalInstance.close('ok');
-//    };
-
-
-//    $scope.cancel = function () {
-//        $uibModalInstance.dismiss('cancel');
-//    };
-
-//});
-
 
 
 courseApp.controller('StartExamModalInstanceCtrl', function ($scope, $http, $uibModal, $uibModalInstance, ExamId, Username) {

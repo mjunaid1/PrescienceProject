@@ -20,6 +20,7 @@ namespace Courses.DataAccess
         static string CourseName = "";
         static int dropboxCount = 0;
         protected string CoursesConnectionString { get; set; }
+        static string Key = ConfigurationManager.AppSettings["DropboxKey"];
         public CoursesRepository()
         {
             CoursesConnectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
@@ -2004,7 +2005,7 @@ namespace Courses.DataAccess
 
         static async Task Run()
         {
-            using (var dbx = new DropboxClient("M9-AXilUwLAAAAAAAAAAE5oPgmq8_7-AqcHjs9K7a9UixgirDSrxt4RzeRmHEzPD"))
+            using (var dbx = new DropboxClient(CoursesRepository.Key))
             {
 
                 var full = await dbx.Users.GetCurrentAccountAsync();
@@ -2023,7 +2024,19 @@ namespace Courses.DataAccess
                 //    Console.WriteLine(await abc1.GetContentAsStringAsync() + "  ");
                 //}
                 //}
-                var list = await dbx.Files.ListFolderAsync(@"/Courses/");
+
+                var list1 = await dbx.Files.ListFolderAsync(@"");
+
+                var a11 = list1.Entries.Where(i => i.Name == "Courses").Count();
+                if (a11 != 1)
+                {
+                    await dbx.Files.CreateFolderAsync("/Courses");
+
+                }
+
+
+
+                    var list = await dbx.Files.ListFolderAsync(@"/Courses/");
 
                 //await Upload(dbx, @"/MyApp/test", "test.txt", "Testing!");
                 //Console.ReadLine();
@@ -2048,7 +2061,7 @@ namespace Courses.DataAccess
 
         static async Task Run1()
         {
-            using (var dbx = new DropboxClient("M9-AXilUwLAAAAAAAAAAE5oPgmq8_7-AqcHjs9K7a9UixgirDSrxt4RzeRmHEzPD"))
+            using (var dbx = new DropboxClient(CoursesRepository.Key))
             {
 
         //        var full = await dbx.Users.GetCurrentAccountAsync();
@@ -2093,7 +2106,7 @@ namespace Courses.DataAccess
 
         static async Task CheckModuleContentCount()
         {
-            using (var dbx = new DropboxClient("M9-AXilUwLAAAAAAAAAAE5oPgmq8_7-AqcHjs9K7a9UixgirDSrxt4RzeRmHEzPD"))
+            using (var dbx = new DropboxClient(CoursesRepository.Key))
             {
 
 
@@ -2122,6 +2135,116 @@ namespace Courses.DataAccess
                 {
                     cmd.CommandType = CommandType.Text;
                     cmd.ExecuteNonQuery();
+                    return true;
+                }
+            }
+        }
+
+        //public bool DeleteCourses(CoursesModel Model)
+        //{
+        //    using (var conn = new SqlConnection(CoursesConnectionString))
+        //    {
+        //        conn.Open();
+        //        string qry = "  update [AspNetUsers] set role = where Email =  ''";
+        //        using (var cmd = new SqlCommand(qry, conn))
+        //        {
+        //            cmd.CommandType = CommandType.Text;
+        //            cmd.ExecuteNonQuery();
+        //            return true;
+        //        }
+        //    }
+        //}
+
+        public bool DeleteCourses(CoursesModel Model)
+        {
+            using (var conn = new SqlConnection(CoursesConnectionString))
+            {
+                conn.Open();
+             //   DeleteModules(Model.CourseID);
+
+                using (var cmd = new SqlCommand("[DeleteCourses]", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@CourseName", SqlDbType.NVarChar).Value = Model.CourseName;
+                    cmd.Parameters.Add("@deleteall", SqlDbType.NVarChar).Value = Model.deleteall;
+             
+
+
+
+                    cmd.ExecuteNonQuery();
+
+                }
+
+                return true;
+            }
+        }
+
+
+        public bool DeleteModules(int id)
+        {
+            using (var conn = new SqlConnection(CoursesConnectionString))
+            {
+                conn.Open();
+                string qry = "select *  from coursemodules where CourseId = " + id ;
+                using (var cmd = new SqlCommand(qry, conn))
+                {
+                    cmd.CommandType = CommandType.Text;
+
+                    List<Modules> data = new List<Modules>();
+                    //var myReader = cmd.ExecuteReader();
+                    using (var myReader = cmd.ExecuteReader())
+                    {
+                        try
+                        {
+                            while (myReader.Read())
+                            {
+                                var get = new Modules(myReader);
+                                data.Add(get);
+                            }
+                            myReader.Close();
+                            foreach (var a in data)
+                            {
+
+                                string qry1 = "delete [Coursemodules] where ModuleId = " + a.ModuleId;
+
+
+                                using (var cmd2 = new SqlCommand(qry1, conn))
+                                {
+                                    cmd2.CommandType = CommandType.Text;
+                                    cmd2.ExecuteNonQuery();
+                                }
+
+
+
+
+                            }
+
+
+                            foreach (var a in data)
+                            {
+
+                                string qry1 = "delete [modules] where ModuleId = " + a.ModuleId;
+
+
+                                using (var cmd2 = new SqlCommand(qry1, conn))
+                                {
+                                    cmd2.CommandType = CommandType.Text;
+                                    cmd2.ExecuteNonQuery();
+                                }
+
+
+
+
+                            }
+
+
+                        }
+                        catch (Exception ex)
+                        {
+                            // LOG ERROR
+                            throw ex;
+                        }
+                    }
                     return true;
                 }
             }

@@ -15,6 +15,8 @@ namespace Courses.Entities
         public string CourseDuration { get; set; }
         public DateTime CourseStartDate { get; set; }
         public string TeacherUsername { get; set; }
+        public bool deleteall { get; set; }
+        
 
 
 
