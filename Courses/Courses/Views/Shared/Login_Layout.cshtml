@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title - Course Login</title>
+
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- v4.0.0-alpha.6 -->
+    <link rel="stylesheet" href="@Url.Content("~/Content/")dist/bootstrap/css/bootstrap.min.css">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="@Url.Content("~/Content/")dist/css/style.css">
+    <link rel="stylesheet" href="@Url.Content("~/Content/")dist/css/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="@Url.Content("~/Content/")dist/css/et-line-font/et-line-font.css">
+    <link rel="stylesheet" href="@Url.Content("~/Content/")dist/css/themify-icons/themify-icons.css">
+
+    <style>
+        body {
+            background-repeat: no-repeat;
+            background-position: center top;
+            background-size: cover;
+           
+               
+        }
+    </style>
+
+</head>
+
+
+<body background="~/Content/Login IMG/books-3205452_960_720.jpg" ng-app="courses">
+
+    <div>
+        @RenderBody()
+    </div>
+    
+    <!-- /.login-box -->
+    <!-- jQuery 3 -->
+    <script src="@Url.Content("~/Content/")dist/js/jquery.min.js"></script>
+    <!-- v4.0.0-alpha.6 -->
+    <script src="@Url.Content("~/Content/")dist/bootstrap/js/bootstrap.min.js"></script>
+    <!-- template -->
+    <script src="@Url.Content("~/Content/")dist/js/niche.js"></script>
+
+</body>
+</html>

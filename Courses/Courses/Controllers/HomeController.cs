@@ -509,6 +509,37 @@ namespace Courses.Controllers
 
         }
 
+        public ActionResult Results()
+        {
+            ViewBag.Messgae = "Your User Page";
+
+
+            if (Request.IsAuthenticated)
+            {
+                s.Username = @User.Identity.GetUserName();
+
+                var r = Repository.CheckUser(s);
+
+
+                if (r.Role == 2)
+                {
+                    ViewBag.role = r.Role;
+                    return View();
+                }
+                else
+                    return RedirectToAction("Index", "Home");
+
+
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+
+            }
+
+
+        }
+
 
         public ActionResult Modules(int? id)
         {            

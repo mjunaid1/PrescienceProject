@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "Modules";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/New_Course_Layout.cshtml";
 }
 @*<style>
     .accordion {
@@ -61,223 +61,245 @@
     
     <div class="container-fluid">
         <!-- Breadcrumbs-->
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a href="/Home/Index">Courses</a>
-            </li>
-            <li class="breadcrumb-item active">Course Modules</li> &nbsp;  &nbsp; <li><span class="badge badge-primary" ng-repeat="x in GetAllCourseProgress" ng-show="x.CoursePer !=0">Overall {{ x.CoursePer  }}% Course Completed</span></li>
-        </ol>
-       
+        @*<section class="content-header sty-one">
+            <h1 class="text-black">
+                Modules
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="/Home/Index">Home</a></li>
+                <li class="sub-bread"><i class="fa fa-angle-right"></i> Tables</li>
+                <li><i class="fa fa-angle-right"></i> Course Modules</li>
+                <li class="breadcrumb-item active">Course Modules</li> &nbsp;  &nbsp;
+                <li><span class="badge badge-primary" ng-repeat="x in GetAllCourseProgress" ng-show="x.CoursePer !=0">Overall {{ x.CoursePer  }}% Course Completed</span></li>
+            </ol>
+        </section>*@
 
-        @*<ul>
-            <li  ng-repeat="x in GetAllSingleUserCourseModules"><a id="xyz{{abc = $index + 1}}" href="" ng-click="ShowContentModules(x.CourseName,x.ModuleName,'abc'+abc)"> {{x.ModuleName}}</a>
-          
-          
-                <ul style="display:none" id="abc{{abc}}" >
-                   
-                   <li ng-repeat="x in GetModuleContentDropboxApi" ng-show=" x.name.split('.').pop().toLowerCase() != 'mp4' && x.name.split('.').pop().toLowerCase() == 'pdf'"><a href="" ng-click="fileClick($event,x.path_display)"> {{x.name}}</a></li>
-                    <li ng-repeat="x in GetModuleContentDropboxApi" ng-show="x.name.split('.').pop().toLowerCase() == 'mp4' && x.name.split('.').pop().toLowerCase() != 'pdf' "><a href="" ng-click="videoClick($event,x.path_display)"> {{x.name}}</a></li>
-
-
-                </ul>
+        <section class="content-header sty-one">
+            <h1 class="text-black">
+                Modules
+            </h1>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/Home/Index">Courses</a>
+                </li>
+                <li class="breadcrumb-item active">Course Modules</li> &nbsp;  &nbsp;
             
-            </li>
-       
-        </ul>
-
-        <br />
-        <br />*@
-
-   
-
-           
-       
-
-        @*<ul style="display:none" id="abc">
-
-            <li ng-repeat="x in GetModuleContentDropboxApi" ng-show="x.name.split('.').pop() != 'mp4' && x.name.split('.').pop() == 'pdf'"><a href="" ng-click="fileClick($event,x.path_display)"> {{x.name}}</a></li>
-            <li ng-repeat="x in GetModuleContentDropboxApi" ng-show="x.name.split('.').pop() == 'mp4'"><a href="" ng-click="videoClick($event,x.path_display)"> {{x.name}}</a></li>
+            </ol>
+            <span class="badge badge-primary" ng-repeat="x in GetAllCourseProgress" ng-show="x.CoursePer !=0">Overall {{ x.CoursePer  }}% Course Completed</span>
+        </section>
 
 
-        </ul>*@
-      
-
-        @*<ul>
-            <li ng-show="x.name.split('.').pop() != 'mp4' && x.name.split('.').pop() == 'pdf'" ng-repeat="x in GetModuleContentDropboxApi"><a href=" https://dl.dropboxusercontent.com/apitl/1/AAA2DUJRPnX9Q1dBVwvAJjgKfiECeRHKuZgzJ3MNZ7RObKOE1EL9rsbziYnLiVhofSMGR3cFZ5v6bQu3oRYVRij0mhTd_ArBq2mv9Eyjx7trDGOWoGSNuj5IQbcU9fDa5PhdBY0Rlw0HaakWMyg7t_zoapmHz1Whw-xypv4VXl1CqpBHjRZR2mjpaFsxVJxzyUmID17svevzboHFSpkX51nrQqsH-xmSxEBMvCL9OwSCSSIiMor2jD0p0mm9kSfKRj0-b1R8UXnj7sLZyV0A4PmQVMX4D7KpxKrxCrPODNdv1RgN7PLcZDc4bLtuINY1Wep0AcA9AwMSR_S6Sz73Lkan"  ng-click=""> {{x.name}}</a></li>
-            <li ng-show="x.name.split('.').pop() == 'mp4'" ng-repeat="x in GetModuleContentDropboxApi"><a href="" ng-click="videoClick($event,x.path_display)"> {{x.name}}</a></li>
-        </ul>*@
-
-   
-
-        @*<div ng-repeat="x in GetModuleContentDropboxApi">
-
-           <ul>
-            <li><a href="{{x.link}}" ng-click=""> {{x.name.split(".").pop()}}</a></li>
-           </ul>
-
-            <div ng-if="x.name.split('.').pop() == 'mp4'">
-
-                {{x.name}}
-
-            <video></video>
-
-            </div>
-
-        </div>*@
+            @*<ul>
+                <li  ng-repeat="x in GetAllSingleUserCourseModules"><a id="xyz{{abc = $index + 1}}" href="" ng-click="ShowContentModules(x.CourseName,x.ModuleName,'abc'+abc)"> {{x.ModuleName}}</a>
 
 
-        @*<div ng-controller="videocontroller">
+                    <ul style="display:none" id="abc{{abc}}" >
+
+                       <li ng-repeat="x in GetModuleContentDropboxApi" ng-show=" x.name.split('.').pop().toLowerCase() != 'mp4' && x.name.split('.').pop().toLowerCase() == 'pdf'"><a href="" ng-click="fileClick($event,x.path_display)"> {{x.name}}</a></li>
+                        <li ng-repeat="x in GetModuleContentDropboxApi" ng-show="x.name.split('.').pop().toLowerCase() == 'mp4' && x.name.split('.').pop().toLowerCase() != 'pdf' "><a href="" ng-click="videoClick($event,x.path_display)"> {{x.name}}</a></li>
 
 
-            <div>
-                <h3><b>Video Segment</b></h3>
-            </div>
+                    </ul>
 
-            <div ng-show="videoSources.length">
-                <video width=176 height=99 style="margin-left: 70px; margin-right: 10px;"
-                       ng-repeat="videoSource in videoSources " ng-src="{{videoSource | trustUrl}}"
-                       ng-click="videoClick($event, videoSource)"></video>
+                </li>
 
-                <a ng-click="videoClick($event, videoSource)" ng-repeat="videoSource in videoSources">yugdsfgtfu</a>
-            </div>
-            <div ng-hide="videoSources.length">
-                <a href="#" ng-click='loadVideos()'>Load videos</a>
-            </div>
+            </ul>
+
+            <br />
+            <br />*@
 
 
 
-        </div>*@
-
-        
-        @*<div ng-repeat="x in GetAllSingleUserCourseModules" >
-
-            <a class="accordion">Section 1</a>
 
 
-            <div class="panel">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-            </div>
 
-        </div>*@
-        @*<iframe src="https://www.dropbox.com/s/wqjhjxyl4xqzzs7/PDF.js%20viewer.pdf?dl=0" height="100" width="100"></iframe>*@
-   
-      
-        <script type="text/ng-template" id="myModal.html">
-            <div id="my-modal-{{id}}" click-outside="cancel()">
-                <div class="modal-header">
-                    <h3 class="modal-title">{{title}}</h3>
+            @*<ul style="display:none" id="abc">
+
+                <li ng-repeat="x in GetModuleContentDropboxApi" ng-show="x.name.split('.').pop() != 'mp4' && x.name.split('.').pop() == 'pdf'"><a href="" ng-click="fileClick($event,x.path_display)"> {{x.name}}</a></li>
+                <li ng-repeat="x in GetModuleContentDropboxApi" ng-show="x.name.split('.').pop() == 'mp4'"><a href="" ng-click="videoClick($event,x.path_display)"> {{x.name}}</a></li>
+
+
+            </ul>*@
+
+
+            @*<ul>
+                <li ng-show="x.name.split('.').pop() != 'mp4' && x.name.split('.').pop() == 'pdf'" ng-repeat="x in GetModuleContentDropboxApi"><a href=" https://dl.dropboxusercontent.com/apitl/1/AAA2DUJRPnX9Q1dBVwvAJjgKfiECeRHKuZgzJ3MNZ7RObKOE1EL9rsbziYnLiVhofSMGR3cFZ5v6bQu3oRYVRij0mhTd_ArBq2mv9Eyjx7trDGOWoGSNuj5IQbcU9fDa5PhdBY0Rlw0HaakWMyg7t_zoapmHz1Whw-xypv4VXl1CqpBHjRZR2mjpaFsxVJxzyUmID17svevzboHFSpkX51nrQqsH-xmSxEBMvCL9OwSCSSIiMor2jD0p0mm9kSfKRj0-b1R8UXnj7sLZyV0A4PmQVMX4D7KpxKrxCrPODNdv1RgN7PLcZDc4bLtuINY1Wep0AcA9AwMSR_S6Sz73Lkan"  ng-click=""> {{x.name}}</a></li>
+                <li ng-show="x.name.split('.').pop() == 'mp4'" ng-repeat="x in GetModuleContentDropboxApi"><a href="" ng-click="videoClick($event,x.path_display)"> {{x.name}}</a></li>
+            </ul>*@
+
+
+
+            @*<div ng-repeat="x in GetModuleContentDropboxApi">
+
+               <ul>
+                <li><a href="{{x.link}}" ng-click=""> {{x.name.split(".").pop()}}</a></li>
+               </ul>
+
+                <div ng-if="x.name.split('.').pop() == 'mp4'">
+
+                    {{x.name}}
+
+                <video></video>
+
                 </div>
-                <div class="modal-body">
-                    <div class="media">
-                        <video style="width:100%;height:100%;" controls autoplay ng-src="{{videoSource | trustUrl}}"></video>
+
+            </div>*@
+
+
+            @*<div ng-controller="videocontroller">
+
+
+                <div>
+                    <h3><b>Video Segment</b></h3>
+                </div>
+
+                <div ng-show="videoSources.length">
+                    <video width=176 height=99 style="margin-left: 70px; margin-right: 10px;"
+                           ng-repeat="videoSource in videoSources " ng-src="{{videoSource | trustUrl}}"
+                           ng-click="videoClick($event, videoSource)"></video>
+
+                    <a ng-click="videoClick($event, videoSource)" ng-repeat="videoSource in videoSources">yugdsfgtfu</a>
+                </div>
+                <div ng-hide="videoSources.length">
+                    <a href="#" ng-click='loadVideos()'>Load videos</a>
+                </div>
+
+
+
+            </div>*@
+
+
+            @*<div ng-repeat="x in GetAllSingleUserCourseModules" >
+
+                <a class="accordion">Section 1</a>
+
+
+                <div class="panel">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                </div>
+
+            </div>*@
+            @*<iframe src="https://www.dropbox.com/s/wqjhjxyl4xqzzs7/PDF.js%20viewer.pdf?dl=0" height="100" width="100"></iframe>*@
+
+
+            <script type="text/ng-template" id="myModal.html">
+                <div id="my-modal-{{id}}" click-outside="cancel()">
+                    <div class="modal-header">
+                        <h3 class="modal-title">{{title}}</h3>
                     </div>
-
-                    @*<iframe  style="width:100%;height:100%;" ng-src="{{videoSource | trustUrl}}" ></iframe>*@
-                    @*<pre>src = {{videoSource | trustUrl}}</pre>*@
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
-                    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
-                </div>
-            </div>
-        </script>
-
-
-        <script type="text/ng-template" id="StartExam.html">
-
-            <div class="modal-header">
-
-                <h4 class="modal-title">{{modalTitle}}</h4>
-            </div>
-            <div class="modal-body">
-
-                <div class="alert alert-danger alert-block" ng-show="isError">
-                    <h6 class="alert-heading">{{errormessage}}</h6>
-                </div>
-                <form>
-                <ul style="list-style:none;" class="col col-md-12">
-                    <li ng-repeat="x1 in ViewAllQuestionAndAnswers.Questions" ng-show="show=='index'+{{abc =$index + 1}}">
-                        <h2 style="font-size: large;font-weight:bold; color:black;">Q#:{{abc = $index + 1}} &nbsp; {{x1.Question}} &nbsp;  &nbsp; <span style="color:lightslategrey; font-weight:bold ; font-size:large;" ng-if="x1.AnswerType === '2' ">(Multiple)</span><span style="color:lightslategrey; font-weight:bold ; font-size:large;" ng-if="x1.AnswerType === '1' ">(Single)</span>  </h2>
-
-
-                        @*<ul ng-repeat="x in ViewQuestionAndAnswers.Answers">
-
-
-                    <li ng-if="x1.QuesId === x.QuesId"> {{x.AnswerText}}  &nbsp; <i ng-if="x.CorrectAnswer === true" class="fa fa-check-square-o" style="font-size:large;color:green;"></i> </li>
-
-
-
-                </ul>*@
-
-                        <div ng-repeat="x in ViewAllQuestionAndAnswers.Answers">
-                            {{xyz}}
-                            
-                            <input type="hidden" id="{{x.AnswerID}}" value="{{xyz}}" />
-                            <label ng-if="x1.AnswerType === '2' && x1.QuesId === x.QuesId "><input  ng-model="x.CorrectAnswer"  type="checkbox" /> &nbsp; {{x.AnswerText}}</label>
-                            <label ng-if="x1.AnswerType === '1'  && x1.QuesId === x.QuesId  "><input id="y{{x.QuesId}}"  ng-model="x.CorrectAnswer" ng-click="jun(x.AnswerID,ViewAllQuestionAndAnswers.Answers,x.QuesId)"  type="checkbox" name="radio{{x.QuesId}}"  /> &nbsp; {{x.AnswerText}}</label>
-                          
+                    <div class="modal-body">
+                        <div class="media">
+                            <video style="width:100%;height:100%;" controls autoplay ng-src="{{videoSource | trustUrl}}"></video>
                         </div>
 
-                        <br />
-
-                    </li>
-                    
-                </ul>
-                 @*<input ng-model="Q1128" type="checkbox" value="" />*@
-                <a class="btn btn-success" ng-show="previous_show" ng-click="previous()">Previous</a> <a ng-show="next_show" class="btn btn-success" ng-click="next()">Next</a>
-                <a ng-show="submitbtn" class="btn btn-warning" ng-click="submit()">Submit</a>
-</form>
-
-                <div ng-show="Isresults">
-
-                    <h1 style="text-align:center; font-weight:bold; color:#868e96">Your Exam Result</h1>
-                    <label style="font-weight:bold; color:#000000">Total Questions Is:&nbsp; &nbsp; <span style="color:blue;font-size:large;font-weight:bold;"> {{TotalQues}} </span></label><br />
-                    <label style="font-weight:bold; color:#000000">Wrong Answer Is:&nbsp; &nbsp; <span style="color:red;font-size:large;font-weight:bold;">{{WrongAns}}</span></label><br />
-                    <label style="font-weight:bold; color:#000000">Correct Answer Is:&nbsp; &nbsp; <span style="color:green;font-size:large;font-weight:bold;"> {{CorrectAns}}</span></label><br />
-                    <label style="font-weight:bold; color:#000000">Your Percentage Is:&nbsp; &nbsp; <span style="color:darkgoldenrod;font-size:large;font-weight:bold;"> {{per}}%</span></label><br />
-
-
-                </div>
-            </div>
-            <div class="modal-footer">
-                @*<button class="btn btn-primary" type="button" ng-click="">Save</button>*@
-                <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
-            </div>
-
-        </script>
-
-
-
-        <div  id="accordion" role="tablist" aria-multiselectable="true">
-            <div  ng-repeat="x1 in GetAllSingleUserCourseModules" class="card">
-                <div class="card-header" role="tab" id="xyz{{abc = $index + 1}}">
-                    <h5  class="mb-0">
-                        <a style="color:black" data-toggle="collapse"  data-parent="#accordion" ng-click="ShowContentModules(x1.CourseName,x1.ModuleName,x1.ModuleId)" href="#xyz1{{abc = $index + 1}}" aria-expanded="true" aria-controls="collapseOne " ><span class="fa fa-plus-square alert-primary" style="float:right"></span>
-                            {{x1.ModuleName}}
-                        </a>
-                        @*&nbsp;  &nbsp;  {{modulePer | number:2 }}*@ 
-                        &nbsp;  &nbsp;  <span class="badge badge-primary" ng-show="x1.Module_Per != NULL">{{x1.Module_Per  | number:0 }}% Completed</span>
-                        
-                    </h5>
-                </div>
-                <div id="xyz1{{abc = $index + 1}}" style="" class="collapse " role="tabpanel" aria-labelledby="headingOne">
-
-                    <div style="margin-left:20px;" class="card-block">
-                        <br />
-                        <span ng-repeat="x in GetModuleContentDropboxApi" ng-show=" x.name.split('.').pop().toLowerCase() != 'mp4' && x.name.split('.').pop().toLowerCase() == 'pdf'"><a style="text-decoration:none;color:black;font-size:large" href="" ng-click="fileClick($event,x.path_display,x1.CourseName,x1.ModuleName,x1.ModuleId,x1.CourseId)"><i class="fa fa-file-pdf-o" aria-hidden="true" style="color:red;font-size:x-large"></i>&nbsp;  {{x.name}}</a> &nbsp; <span ng-repeat="x3 in GetContentProgress" ng-show="x3.ContentId == x.id"><i class="fa fa-check" aria-hidden="true" style="color:green;font-size:x-large"></i></span><br /> <br /></span>
-
-                        <span ng-repeat="x in GetModuleContentDropboxApi" ng-show="x.name.split('.').pop().toLowerCase() == 'mp4' && x.name.split('.').pop().toLowerCase() != 'pdf' "><a style="text-decoration:none;color:black;font-size:large" href="" ng-click="videoClick($event,x.path_display,x1.CourseName,x1.ModuleName,x1.ModuleId,x1.CourseId)"><i class="fa fa-play-circle-o" aria-hidden="true" style="color:grey;font-size:x-large"></i>&nbsp;   {{x.name}}</a> &nbsp; <span ng-repeat="x3 in GetContentProgress" ng-show="x3.ContentId == x.id"><i class="fa fa-check" aria-hidden="true" style="color:green;font-size:x-large"></i></span><br /> <br /></span>
-                        <br /><br />
+                        @*<iframe  style="width:100%;height:100%;" ng-src="{{videoSource | trustUrl}}" ></iframe>*@
+                        @*<pre>src = {{videoSource | trustUrl}}</pre>*@
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+                        @*<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>*@
                     </div>
                 </div>
-              
-            </div>
-           
-        </div>
-        <br /><br />
+            </script>
 
-        <a ng-repeat="x in getAllExamsPerCourse" href="" ng-click="StartExam(x.ExamId)" class="btn btn-secondary">Start {{x.ExamName}}</a>
-    </div>
+
+            <script type="text/ng-template" id="StartExam.html">
+
+                <div class="modal-header">
+
+                    <h4 class="modal-title">{{modalTitle}}</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="alert alert-danger alert-block" ng-show="isError">
+                        <h6 class="alert-heading">{{errormessage}}</h6>
+                    </div>
+                    <form>
+                        <ul style="list-style:none;" class="col col-md-12">
+                            <li ng-repeat="x1 in ViewAllQuestionAndAnswers.Questions" ng-show="show=='index'+{{abc =$index + 1}}">
+                                <h2 style="font-size: large;font-weight:bold; color:black;">Q#:{{abc = $index + 1}} &nbsp; {{x1.Question}} &nbsp;  &nbsp; <span style="color:lightslategrey; font-weight:bold ; font-size:large;" ng-if="x1.AnswerType === '2' ">(Multiple)</span><span style="color:lightslategrey; font-weight:bold ; font-size:large;" ng-if="x1.AnswerType === '1' ">(Single)</span>  </h2>
+
+
+                                @*<ul ng-repeat="x in ViewQuestionAndAnswers.Answers">
+
+
+                                    <li ng-if="x1.QuesId === x.QuesId"> {{x.AnswerText}}  &nbsp; <i ng-if="x.CorrectAnswer === true" class="fa fa-check-square-o" style="font-size:large;color:green;"></i> </li>
+
+
+
+                                </ul>*@
+
+                                <div ng-repeat="x in ViewAllQuestionAndAnswers.Answers">
+                                    {{xyz}}
+
+                                    <input type="hidden" id="{{x.AnswerID}}" value="{{xyz}}" />
+                                    <label ng-if="x1.AnswerType === '2' && x1.QuesId === x.QuesId "><input ng-model="x.CorrectAnswer" type="checkbox" /> &nbsp; {{x.AnswerText}}</label>
+                                    <label ng-if="x1.AnswerType === '1'  && x1.QuesId === x.QuesId  "><input id="y{{x.QuesId}}" ng-model="x.CorrectAnswer" ng-click="jun(x.AnswerID,ViewAllQuestionAndAnswers.Answers,x.QuesId)" type="checkbox" name="radio{{x.QuesId}}" /> &nbsp; {{x.AnswerText}}</label>
+
+                                </div>
+
+                                <br />
+
+                            </li>
+
+                        </ul>
+                        @*<input ng-model="Q1128" type="checkbox" value="" />*@
+                        <a class="btn btn-success" ng-show="previous_show" ng-click="previous()">Previous</a> <a ng-show="next_show" class="btn btn-success" ng-click="next()">Next</a>
+                        <a ng-show="submitbtn" class="btn btn-warning" ng-click="submit()">Submit</a>
+                    </form>
+
+                    <div ng-show="Isresults">
+
+                        <h1 style="text-align:center; font-weight:bold; color:#868e96">Your Exam Result</h1>
+                        <label style="font-weight:bold; color:#000000">Total Questions Is:&nbsp; &nbsp; <span style="color:blue;font-size:large;font-weight:bold;"> {{TotalQues}} </span></label><br />
+                        <label style="font-weight:bold; color:#000000">Wrong Answer Is:&nbsp; &nbsp; <span style="color:red;font-size:large;font-weight:bold;">{{WrongAns}}</span></label><br />
+                        <label style="font-weight:bold; color:#000000">Correct Answer Is:&nbsp; &nbsp; <span style="color:green;font-size:large;font-weight:bold;"> {{CorrectAns}}</span></label><br />
+                        <label style="font-weight:bold; color:#000000">Your Percentage Is:&nbsp; &nbsp; <span style="color:darkgoldenrod;font-size:large;font-weight:bold;"> {{per}}%</span></label><br />
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    @*<button class="btn btn-primary" type="button" ng-click="">Save</button>*@
+                    @*<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>*@
+                    <button ng-show="okbtn" class="btn btn-primary" type="button" ng-click="cancel()">Ok</button>
+                </div>
+
+            </script>
+
+
+
+            <div id="accordion" role="tablist" aria-multiselectable="true">
+                <div ng-repeat="x1 in GetAllSingleUserCourseModules" class="card">
+                    <div class="card-header" role="tab" id="xyz{{abc = $index + 1}}">
+                        <h5 class="mb-0">
+                            <a style="color:black" data-toggle="collapse" data-parent="#accordion" ng-click="ShowContentModules(x1.CourseName,x1.ModuleName,x1.ModuleId)" href="#xyz1{{abc = $index + 1}}" aria-expanded="true" aria-controls="collapseOne ">
+                                <span class="fa fa-plus-square alert-primary" style="float:right"></span>
+                                {{x1.ModuleName}}
+                            </a>
+                            @*&nbsp;  &nbsp;  {{modulePer | number:2 }}*@
+                            &nbsp;  &nbsp;  <span class="badge badge-primary" ng-show="x1.Module_Per != NULL">{{x1.Module_Per  | number:0 }}% Completed</span>
+
+                        </h5>
+                    </div>
+                    <div id="xyz1{{abc = $index + 1}}" style="" class="collapse " role="tabpanel" aria-labelledby="headingOne">
+
+                        <div style="margin-left:20px;" class="card-block">
+                            <br />
+                            <span ng-repeat="x in GetModuleContentDropboxApi" ng-show=" x.name.split('.').pop().toLowerCase() != 'mp4' && x.name.split('.').pop().toLowerCase() == 'pdf'"><a style="text-decoration:none;color:black;font-size:large" href="" ng-click="fileClick($event,x.path_display,x1.CourseName,x1.ModuleName,x1.ModuleId,x1.CourseId)"><i class="fa fa-file-pdf-o" aria-hidden="true" style="color:red;font-size:x-large"></i>&nbsp;  {{x.name}}</a> &nbsp; <span ng-repeat="x3 in GetContentProgress" ng-show="x3.ContentId == x.id"><i class="fa fa-check" aria-hidden="true" style="color:green;font-size:x-large"></i></span><br /> <br /></span>
+
+                            <span ng-repeat="x in GetModuleContentDropboxApi" ng-show="x.name.split('.').pop().toLowerCase() == 'mp4' && x.name.split('.').pop().toLowerCase() != 'pdf' "><a style="text-decoration:none;color:black;font-size:large" href="" ng-click="videoClick($event,x.path_display,x1.CourseName,x1.ModuleName,x1.ModuleId,x1.CourseId)"><i class="fa fa-play-circle-o" aria-hidden="true" style="color:grey;font-size:x-large"></i>&nbsp;   {{x.name}}</a> &nbsp; <span ng-repeat="x3 in GetContentProgress" ng-show="x3.ContentId == x.id"><i class="fa fa-check" aria-hidden="true" style="color:green;font-size:x-large"></i></span><br /> <br /></span>
+                            <br /><br />
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <br /><br />
+
+            <a ng-repeat="x in getAllExamsPerCourse" href="" ng-click="StartExam(x.ExamId)" class="btn btn-secondary">Start {{x.ExamName}}</a>
+</div>
 
 
 @*<div id="accordion" role="tablist" aria-multiselectable="true">

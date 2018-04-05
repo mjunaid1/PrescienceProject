@@ -2,59 +2,72 @@
 @model LoginViewModel
 @{
     ViewBag.Title = "Log in";
-    Layout = "~/Views/Shared/__LoginPartialNew.cshtml";
+    Layout = "~/Views/Shared/Login_Layout.cshtml";
 
 }
 
 
-<div class="card card-login mx-auto mt-5">
-    <div class="card-header">Login To Courses App</div>
-    <div class="card-body">
-        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-group", role = "form" }))
-            {
-            @Html.AntiForgeryToken()
-            @*<h4>Use a local account to log in.</h4>*@
-
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.LabelFor(m => m.Email)
-
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-
+<div class="hold-transition login-page sty1">
+    <div class="login-box sty1">
+        <div class="login-box-body sty1">
+            <div class="login-logo">
+                <a href="/Account/Login"><img src="@Url.Content("~/Content/")dist/img/login ilf.png" alt="" width="220px" height="50px"></a><br />
+                <img style="width:120px;height:120px;margin-top:20px" src="~/Content/dist/img/1ilfwhite.png" />
             </div>
-                <div class="form-group">
+
+            <p class="login-box-msg">Sign in to start your session</p>
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-group", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @*<h4>Use a local account to log in.</h4>*@
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group has-feedback">
+                    @Html.LabelFor(m => m.Email)
+
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+
+                </div>
+                <div class="form-group has-feedback">
                     @Html.LabelFor(m => m.Password)
 
                     @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
                     @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
 
                 </div>
-                <div class="form-group">
+                @*<div class="form-group">
 
-                    <div class="form-check">
-                        @Html.CheckBoxFor(m => m.RememberMe)
-                        @Html.LabelFor(m => m.RememberMe)
-                    </div>
+                        <div class="form-check">
+                            @Html.CheckBoxFor(m => m.RememberMe)
+                            @Html.LabelFor(m => m.RememberMe)
+                        </div>
 
+                    </div>*@
+
+                <div class="col-xs-4 m-t-1">
+                    <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
                 </div>
 
-                <input type="submit" value="Log in" class="btn btn-success btn-block" />
+                @*<input type="submit" value="Log in" class="btn btn-success btn-block" />*@
                 <br />
-                        @*<div class="text-center bg-light">
-                            @Html.ActionLink("Register as a new user", "Register", new { @class = "d-block small mt-3" })
+                @*<div class="text-center bg-light">
+                        @Html.ActionLink("Register as a new user", "Register", new { @class = "d-block small mt-3" })
 
-                        </div>*@
+                    </div>*@
 
 
-                        @* Enable this once you have account confirmation enabled for password reset functionality
-                            <p>
-                                @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                            </p>*@
-        }
+                @* Enable this once you have account confirmation enabled for password reset functionality
+                    <p>
+                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
+                    </p>*@
+                @*<div class="col-md-12">
+                    <img class="" style="width:330px;height:300px;margin-top:20px;opacity:0.5" src="~/Content/Login IMG/log1 (3).png" />
+                </div>*@
+            }
+        </div>
+
     </div>
-
-
 
 </div>
 

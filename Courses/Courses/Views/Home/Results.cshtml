@@ -1,0 +1,131 @@
+﻿
+@{
+    ViewBag.Title = "Results";
+    Layout = "~/Views/Shared/New_Course_Layout.cshtml";
+}
+
+
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <section class="content-header sty-one">
+        <h1 class="text-black">
+            Delete Courses
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="/Home/Index">Home</a></li>
+
+            <li><i class="fa fa-angle-right"></i> Results</li>
+        </ol>
+    </section>
+
+
+    <div class="row">
+        <div class="col-12">
+            @*<h1 style="color:rgb(53, 53, 53); font-weight:bold;">RESULTS</h1>*@
+
+           
+            <div ng-show="isStudent && showtbl" class="card mb-3">
+                <div class="card-header">
+                    <i class="fa fa-table "></i><span style="color:#2f3742; font-weight:bold;"> Students </span> Results
+                </div>
+                <br />
+                <div class="card-body">
+                    <div class="table-responsive table-sm ">
+                        <table class="table table-bordered table-striped" cellspacing="0">
+                            <thead class="bg-blue-gradient text-black" style="font-weight:normal">
+                                <tr>
+                                    @*<th>STUDENT USERNAME</th>*@
+                                    <th>EXAM NAME</th>
+                                    <th>RESULT</th>
+                                    @*<th>TEACHER COMMENTS</th>*@
+                                    <th>VIEW RESULT</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="x in getAllExamResult">
+
+
+                                    @*<td>{{x.Username}}</td>*@
+                                    <td>{{x.ExamName}}</td>
+                                    <td>{{x.Result}}</td>
+                                    @*<td>{{x.Comments}}</td>*@
+                                    <td><a ng-show="x.ExamId != 0" ng-click="ViewStudentExam(x.ExamId,x.ExamName,x.Username,x.Result,x.Comments,x.ResultId,x.CourseID)" href="">View Result</a></td>
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="viewStudentExam.html">
+
+    <div class="modal-header">
+
+        <h4 class="modal-title">{{modalTitle}}</h4> <span>{{RightCount}}</span> <span>{{WrongCount}}</span>
+    </div>
+    <div class="modal-body">
+
+        <div class="alert alert-danger alert-block" ng-show="isError">
+            <h6 class="alert-heading">{{errormessage}}</h6>
+        </div>
+        <ul style="list-style:none;" class="col col-md-12">
+
+            <li ng-repeat="x1 in ViewQuestionAndAnswers.Questions">
+
+                <h2 style="font-size: large;font-weight:bold; color:black;">Q#:{{abc = $index + 1}} &nbsp; {{x1.Question}} &nbsp;  &nbsp; <span style="color:lightslategrey; font-weight:bold ; font-size:large;" ng-if="x1.AnswerType === '2' ">(Multiple)</span><span style="color:lightslategrey; font-weight:bold ; font-size:large;" ng-if="x1.AnswerType === '1' ">(Single)</span>  </h2>
+
+
+
+                <ul ng-repeat="x in ViewQuestionAndAnswers.Answers">
+
+
+                    <li ng-if="x1.QuesId === x.QuesId"> <span style="" ng-if="x.CorrectAnswer === false">{{x.AnswerText}} </span><span style="color:green" ng-if="x.CorrectAnswer === true">{{x.AnswerText}} </span> @*&nbsp; <i ng-if="x.CorrectAnswer === true" class="fa fa-check-square-o" style="font-size:large;color:green;"></i>*@   &nbsp; <i ng-if="x.UserAnswer	 === true" class="fa fa-check-square-o" style="font-size:large;color:cornflowerblue;"></i></li>
+
+
+
+                </ul>
+                <p style="color:green" ng-if="checkAns[$index] === 'Correct Answer!'">{{checkAns[$index]}}</p>
+                <p style="color:red" ng-if="checkAns[$index] === 'Wrong Answer!'">{{checkAns[$index]}}</p>
+
+                <hr />
+                <br />
+
+            </li>
+
+        </ul>
+
+        <form ng-show="comm && check == 'teacher'">
+
+            <textarea ng-model="comments" class="form-control" placeholder="Add Comment" style="width:100%"></textarea>
+            <br />
+            @*<a href="" ng-click="" class="btn btn-success">Save</a>*@
+        </form>
+        <label ng-show="check == 'student'">Teacher Comments:</label>
+        <textarea ng-show="check == 'student'" readonly ng-model="comments" class="form-control" placeholder="" style="width:100%"></textarea>
+
+    </div>
+    <div class="modal-footer">
+        @*<button class="btn btn-primary" type="button" ng-click="">Save</button>*@
+        <button ng-show="check == 'teacher'" class="btn btn-success" type="button" ng-click="UpdateComment()">Save</button>
+        <button ng-show="check == 'student'" class="btn btn-lg btn-primary" type="button" ng-click="cancel()">Ok</button>
+    </div>
+
+</script>
+
+@*<script>
+        function myFun() {
+            document.getElementById("myform").reset();
+            alert("Save Success");
+        }
+    </script>*@
+

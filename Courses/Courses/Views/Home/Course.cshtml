@@ -1,18 +1,22 @@
 ﻿
 @{
     ViewBag.Title = "Course";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/New_Course_Layout.cshtml";
 }
 
 
     <div class="container-fluid">
         <!-- Breadcrumbs-->
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a href="/Home/Index">Dashboard</a>
-            </li>
-            <li class="breadcrumb-item active">Courses</li>
-        </ol>
+        <section class="content-header sty-one">
+            <h1 class="text-black" >
+                Courses
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="/Home/Index">Home</a></li>
+               
+                <li><i class="fa fa-angle-right"></i> COURSES</li>
+            </ol>
+        </section>
 
         @*<table id="tblPropertyAssessedResult" class="table table-bordered table-responsive table-striped table-hover" >
             <thead>
@@ -47,27 +51,73 @@
 
         <div class="row">
             <div class="col-12">
-                <h1 style="color:rgb(53, 53, 53); font-weight:bold;">COURSES</h1>
+                @*<h1 style="color:rgb(53, 53, 53); font-weight:bold;">COURSES</h1>*@
 
                 <form id="myform">
                    
                     <div class="form-row">
-                        <div class="form-group col-3">
-                            <label>Course Name</label>
-                            <input type="text" ng-model="CourseName" class="form-control" placeholder="Course Name" >
-                        </div>
-                        <div class="form-group col-3">
-                            <label>Course Duration</label>
-                            <input type="text" ng-model="CourseDuration" class="form-control" placeholder="Course Duration" >
+
+                        <div class="col-lg-3">
+                            <fieldset class="form-group">
+                                <label>Course Name</label>
+                                <input type="text" ng-model="CourseName" class="form-control" id="basicInput" placeholder="Course Name">
+
+                            </fieldset>
                         </div>
 
-                        <div class="form-group col-3">
+
+
+                        @*<div class="form-group col-3">
+                            <label>Course Name</label>
+                            <input type="text" ng-model="CourseName" class="form-control" placeholder="Course Name" >
+                        </div>*@
+
+                        <div class="col-lg-3">
+                            <fieldset class="form-group">
+                                <label>Course Duration</label>
+                                <input type="text" ng-model="CourseDuration" class="form-control" id="basicInput" placeholder="Course Duration">
+
+                            </fieldset>
+                        </div>
+
+                        @*<div class="form-group col-3">
+                            <label>Course Duration</label>
+                            <input type="text" ng-model="CourseDuration" class="form-control" placeholder="Course Duration" >
+                        </div>*@
+
+                        <div class="col-lg-3">
+                            <fieldset class="form-group">
+                                <label>Date</label>
+                                <input type="date" ng-model="CourseStartDate" class="form-control" value="//-//-//">
+
+                            </fieldset>
+                        </div>
+
+
+                        @*<div class="form-group col-3">
                             <label>Date</label>
                             <div>
                                 <input  ng-model="CourseStartDate" class="form-control" type="date" value="//-//-//" >
                             </div>
+                        </div>*@
+
+
+                        <div class="col-lg-3">
+                            <fieldset class="form-group">
+                                <label>Teacher Username </label>
+                                <select id="selectedTeacher" ng-model="selectedTeacher" class="form-control">
+
+
+
+                                    <option ng-repeat="x in getAllTeachers" value="{{x.Username}}">{{x.Username}}</option>
+
+
+                                </select>
+
+                            </fieldset>
                         </div>
-                        <div class="form-group col-3">
+
+                        @*<div class="form-group col-3">
                             <label> Teacher Username </label>
 
                             <select id="selectedTeacher" ng-model="selectedTeacher" class="form-control">
@@ -78,13 +128,13 @@
 
 
                             </select>
-                        </div>
+                        </div>*@
 
 
 
                         </div>
 
-                    <button type="submit" ng-click="AddCourses()"  class="btn btn-success">SUBMIT</button>
+                    <button type="submit" ng-click="AddCourses()"  class="btn btn-primary">SUBMIT</button>
                 </form>
                 <br />
                 <div class="alert alert-success alert-block" ng-show="isSuccess">
@@ -99,12 +149,12 @@
                 <!-- Example DataTables Card-->
                 <div class="card mb-3">
                     <div class="card-header">
-                        <i class="fa fa-table "></i><span style="color:#868e96; font-weight:bold;"> Courses </span> Table
+                        <i class="fa fa-table "></i><span style="color:#2f3742; font-weight:bold;"> Courses </span> Table
                     </div>
                     <div class="card-body">
                         <div class="table-responsive table-sm ">
                             <table class="table table-striped table-bordered" cellspacing="0">
-                                <thead class="table-info">
+                                <thead class="bg-blue-gradient text-black" style="font-weight:normal">
                                     <tr>
                                         <th>COURSE NAME</th>
                                         <th>COURSE DURATION</th>

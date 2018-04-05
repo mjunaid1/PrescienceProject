@@ -5,7 +5,18 @@
     {
         @Html.AntiForgeryToken()
 
-        <ul class="nav navbar-nav navbar-right ">
+
+        <ul class="user-header ">
+
+            <li style="font-size:medium;">
+
+                @Html.ActionLink("" + User.Identity.GetUserName() + "!", "Index", "", routeValues: null, htmlAttributes: new { title = "", style = "color: black;" })
+            </li>
+
+            <li style="font-size:medium;"><a href="javascript:document.getElementById('logoutForm').submit()" style="color:black;"> &nbsp; @*&nbsp; <i class="fa fa-sign-out" style="font-size:x-large"></i>*@ Log Out </a></li>
+        </ul>
+
+        @*<ul class="nav navbar-nav navbar-right ">
             <h2 style="margin-right:200px;color:white;">  Islamic Learning Foundation</h2>
             <li style="font-size:large;" >
 
@@ -13,7 +24,7 @@
             </li>
 
              <li style="font-size:large;"><a href="javascript:document.getElementById('logoutForm').submit()" style="color:white;"> &nbsp; &nbsp; <i class="fa fa-sign-out" style="font-size:x-large"></i> Log Out </a></li>
-        </ul>
+        </ul>*@
     }
 }
 else

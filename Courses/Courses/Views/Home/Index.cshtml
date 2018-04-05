@@ -1,18 +1,21 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/New_Course_Layout.cshtml";
 }
 @using Microsoft.AspNet.Identity
 
 <div class="container-fluid">
     
-        <!-- Breadcrumbs-->
+    <section class="content-header sty-one">
+        <h1 class="text-black">
+            Main-Dashboard
+        </h1>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a href="/Home/Index">Dashboard</a>
-            </li>
-            <li class="breadcrumb-item active">My Dashboard</li>
+            <li><a href="/Home/Index">Home</a></li>
+            @*<li class="sub-bread"><i class="fa fa-angle-right"></i> Tables</li>*@
+            <li><i class="fa fa-angle-right"></i> Dashboard</li>
         </ol>
-        <!-- Icon Cards-->
+    </section>
    
         @if (Request.IsAuthenticated)
         {
@@ -28,15 +31,22 @@
                         </iframe>*@
                 <!--style = "display: none;" -->
               
-                <p  ng-show="isStudent" class="lead" style="font-size:27px; font-weight:normal;color:black">
+                <p  ng-show="isStudent && GetAllSingleUserCourses != ''" class="lead" style="font-size:27px; font-weight:normal;color:black">
                You Are Enrolled In The Following Courses...</p>
 
-             
+            <p ng-show="isStudent && GetAllSingleUserCourses == ''" class="lead" style="font-size:27px; font-weight:normal;color:black">
+                You Are Not Enrolled In Any Course...
+            </p>
+
          <span  ng-show="isStudent" style="font-size:x-large; font-weight:300; font-family:Gill-Sans, Arial, sans-serif" ng-repeat="x in GetAllSingleUserCourses"><a style="color:black;" href="~/Home/Modules/{{x.CourseID}}" ng-click=""> <i class="fa fa-book" aria-hidden="true" style="color:grey;font-size:xx-large"></i> {{x.CourseName}}<br /></a></span>
 
 
-        <p ng-show="isTeacher" class="lead" style="font-size:27px; font-weight:normal;color:black">
+        <p ng-show="isTeacher && getAllSingleTeachersCourses != '' " class="lead" style="font-size:27px; font-weight:normal;color:black">
             You Are Enrolled In The Following Courses...
+        </p>
+
+        <p ng-show="isTeacher && getAllSingleTeachersCourses == ''" class="lead" style="font-size:27px; font-weight:normal;color:black">
+            You Are Not Enrolled In Any Course...
         </p>
         @*<span ng-show="isTeacher" style="font-size:x-large; font-weight:300; font-family:Gill-Sans, Arial, sans-serif" ng-repeat="x in getAllSingleTeachersCourses"><a style="color:black;" href="{{x.CourseID}}" ng-click=""> <i class="fa fa-book" aria-hidden="true" style="color:grey;font-size:xx-large"></i> {{x.CourseName}}<br /></a></span>*@
 
@@ -44,12 +54,12 @@
 
                 <div ng-show="isAdmin" class="card mb-3">
                     <div class="card-header">
-                        <i class="fa fa-table "></i><span style="color:#868e96; font-weight:bold;"> Students </span> Enrolled
+                        <i class="fa fa-table "></i><span style="color:#2f3742; font-weight:bold;"> Students </span> Enrolled
                     </div>
                     <div class="card-body">
                         <div class="table-responsive table-sm ">
                             <table class="table table-striped table-bordered" cellspacing="0">
-                                <thead class="table-dark">
+                                <thead class="bg-blue-gradient text-black" style="font-weight:normal">
                                     <tr>
                                         <th>STUDENT USERNAME</th>
                                         <th>COURSE NAME</th>
@@ -93,43 +103,7 @@
             <h1>You need to be logged in to View your courses</h1>
         }
     <br /><br/>
-    <div ng-show="isStudent && showtbl" class="card mb-3">
-        <div class="card-header">
-            <i class="fa fa-table "></i><span style="color:#868e96; font-weight:bold;"> Students </span> Results
-        </div>
-        <br />
-        <div class="card-body">
-            <div class="table-responsive table-sm ">
-                <table class="table table-bordered table-striped" cellspacing="0">
-                    <thead class="table-info">
-                        <tr>
-                            @*<th>STUDENT USERNAME</th>*@
-                            <th>EXAM NAME</th>
-                            <th>RESULT</th>
-                            @*<th>TEACHER COMMENTS</th>*@
-                            <th>VIEW RESULT</th>
-
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="x in getAllExamResult">
-
-
-                            @*<td>{{x.Username}}</td>*@
-                            <td>{{x.ExamName}}</td>
-                            <td>{{x.Result}}</td>
-                            @*<td>{{x.Comments}}</td>*@
-                            <td><a ng-show="x.ExamId != 0" ng-click="ViewStudentExam(x.ExamId,x.ExamName,x.Username,x.Result,x.Comments,x.ResultId,x.CourseID)" href="">View Result</a></td>
-                         
-                        </tr>
-
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-    </div>
+  
        
     <div ng-show="isTeacher" id="accordion" role="tablist" aria-multiselectable="true">
         <div ng-repeat="x1 in getAllSingleTeachersCourses" class="card">
@@ -148,13 +122,13 @@
                 <br />
                 <div  class="card mb-3">
                     <div class="card-header">
-                        <i class="fa fa-table "></i><span style="color:#868e96; font-weight:bold;"> Students </span> Progress
+                        <i class="fa fa-table "></i><span style="color:#2f3742; font-weight:bold;"> Students </span> Progress
                     </div>
                     <br />
                     <div class="card-body">
                         <div class="table-responsive table-sm ">
                             <table class="table table-bordered table-striped" cellspacing="0">
-                                <thead class="table-info">
+                                <thead class="bg-blue-gradient text-black" style="font-weight:normal">
                                     <tr>
                                         <th>STUDENT USERNAME</th>
                                         <th>CURRENT MODULE NAME</th>
@@ -194,61 +168,64 @@
 
     </div>
 
-    <script type="text/ng-template" id="viewStudentExam.html">
-
-        <div class="modal-header">
-
-            <h4 class="modal-title">{{modalTitle}}</h4> <span>{{RightCount}}</span> <span>{{WrongCount}}</span>
-        </div>
-        <div class="modal-body">
-
-            <div class="alert alert-danger alert-block" ng-show="isError">
-                <h6 class="alert-heading">{{errormessage}}</h6>
-            </div>
-            <ul style="list-style:none;" class="col col-md-12">
-               
-                <li ng-repeat="x1 in ViewQuestionAndAnswers.Questions" >
-                    
-                    <h2 style="font-size: large;font-weight:bold; color:black;">Q#:{{abc = $index + 1}} &nbsp; {{x1.Question}} &nbsp;  &nbsp; <span style="color:lightslategrey; font-weight:bold ; font-size:large;" ng-if="x1.AnswerType === '2' ">(Multiple)</span><span style="color:lightslategrey; font-weight:bold ; font-size:large;" ng-if="x1.AnswerType === '1' ">(Single)</span>  </h2>
-
-                 
-
-                    <ul ng-repeat="x in ViewQuestionAndAnswers.Answers">
-
-
-                        <li ng-if="x1.QuesId === x.QuesId"> <span style="" ng-if="x.CorrectAnswer === false">{{x.AnswerText}} </span><span style="color:green" ng-if="x.CorrectAnswer === true" >{{x.AnswerText}} </span> @*&nbsp; <i ng-if="x.CorrectAnswer === true" class="fa fa-check-square-o" style="font-size:large;color:green;"></i>*@   &nbsp; <i ng-if="x.UserAnswer	 === true" class="fa fa-check-square-o" style="font-size:large;color:cornflowerblue;"></i></li>
-
-
-
-                    </ul>
-                    <p style="color:green" ng-if="checkAns[$index] === 'Correct Answer!'">{{checkAns[$index]}}</p>
-                    <p style="color:red" ng-if="checkAns[$index] === 'Wrong Answer!'">{{checkAns[$index]}}</p>
-
-                    <hr />
-                    <br />
-
-                </li>
-
-            </ul>
-
-            <form ng-show="comm && check == 'teacher'">
-                
-                <textarea ng-model="comments" class="form-control" placeholder="Add Comment" style="width:100%" ></textarea>
-                <br />
-                @*<a href="" ng-click="" class="btn btn-success">Save</a>*@
-            </form>
-            <label ng-show="check == 'student'">Teacher Comments:</label>
-            <textarea ng-show="check == 'student'" readonly ng-model="comments" class="form-control" placeholder="Add Comment" style="width:100%"></textarea>
-
-        </div>
-        <div class="modal-footer">
-            @*<button class="btn btn-primary" type="button" ng-click="">Save</button>*@
-            <button ng-show="check == 'teacher'"  class="btn btn-success" type="button" ng-click="UpdateComment()">Save</button>
-            <button ng-show="check == 'student'" class="btn btn-warning" type="button" ng-click="cancel()"  >Cancel</button>
-        </div>
-
-    </script>
+  
 </div>
+
+<script type="text/ng-template" id="viewStudentExam.html">
+
+    <div class="modal-header">
+
+        <h4 class="modal-title">{{modalTitle}}</h4> <span>{{RightCount}}</span> <span>{{WrongCount}}</span>
+    </div>
+    <div class="modal-body">
+
+        <div class="alert alert-danger alert-block" ng-show="isError">
+            <h6 class="alert-heading">{{errormessage}}</h6>
+        </div>
+        <ul style="list-style:none;" class="col col-md-12">
+
+            <li ng-repeat="x1 in ViewQuestionAndAnswers.Questions">
+
+                <h2 style="font-size: large;font-weight:bold; color:black;">Q#:{{abc = $index + 1}} &nbsp; {{x1.Question}} &nbsp;  &nbsp; <span style="color:lightslategrey; font-weight:bold ; font-size:large;" ng-if="x1.AnswerType === '2' ">(Multiple)</span><span style="color:lightslategrey; font-weight:bold ; font-size:large;" ng-if="x1.AnswerType === '1' ">(Single)</span>  </h2>
+
+
+
+                <ul ng-repeat="x in ViewQuestionAndAnswers.Answers">
+
+
+                    <li ng-if="x1.QuesId === x.QuesId"> <span style="" ng-if="x.CorrectAnswer === false">{{x.AnswerText}} </span><span style="color:green" ng-if="x.CorrectAnswer === true">{{x.AnswerText}} </span> @*&nbsp; <i ng-if="x.CorrectAnswer === true" class="fa fa-check-square-o" style="font-size:large;color:green;"></i>*@   &nbsp; <i ng-if="x.UserAnswer	 === true" class="fa fa-check-square-o" style="font-size:large;color:cornflowerblue;"></i></li>
+
+
+
+                </ul>
+                <p style="color:green" ng-if="checkAns[$index] === 'Correct Answer!'">{{checkAns[$index]}}</p>
+                <p style="color:red" ng-if="checkAns[$index] === 'Wrong Answer!'">{{checkAns[$index]}}</p>
+
+                <hr />
+                <br />
+
+            </li>
+
+        </ul>
+
+        <form ng-show="comm && check == 'teacher'">
+
+            <textarea ng-model="comments" class="form-control" placeholder="Add Comment" style="width:100%"></textarea>
+            <br />
+            @*<a href="" ng-click="" class="btn btn-success">Save</a>*@
+        </form>
+        <label ng-show="check == 'student'">Teacher Comments:</label>
+        <textarea ng-show="check == 'student'" readonly ng-model="comments" class="form-control" placeholder="" style="width:100%"></textarea>
+
+    </div>
+    <div class="modal-footer">
+        @*<button class="btn btn-primary" type="button" ng-click="">Save</button>*@
+        <button ng-show="check == 'teacher'" class="btn btn-success" type="button" ng-click="UpdateComment()">Save</button>
+        <button ng-show="check == 'student'" class="btn btn-lg btn-primary" type="button" ng-click="cancel()">Ok</button>
+    </div>
+
+</script>
+
 <!-- /.container-fluid-->
 <!-- /.content-wrapper-->
 

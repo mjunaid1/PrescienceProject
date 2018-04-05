@@ -1,17 +1,21 @@
 ﻿
 @{
     ViewBag.Title = "Admin";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/New_Course_Layout.cshtml";
 }
 
     <div class="container-fluid">
         <!-- Breadcrumbs-->
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a href="/Home/Index">Dashboard</a>
-            </li>
-            <li class="breadcrumb-item active">ADMIN</li>
-        </ol>
+        <section class="content-header sty-one">
+            <h1 class="text-black">
+                Admin
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="/Home/Index">Home</a></li>
+
+                <li><i class="fa fa-angle-right"></i> Admin</li>
+            </ol>
+        </section>
         <div class="row">
             <div class="col-12">
                 <h1 style="color:#868e96; font-weight:bold;">Blank</h1>

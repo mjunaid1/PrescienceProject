@@ -1,78 +1,92 @@
 ﻿@model Courses.Models.RegisterViewModel
 @{
     ViewBag.Title = "AddUser";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/New_Course_Layout.cshtml";
 }
 
 
-    <div class="container-fluid">
+<div class="container-fluid">
+  
+    <!-- Breadcrumbs-->
+    <section class="content-header sty-one">
+        <h1 class="text-black">
+            Add Users
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="/Home/Index">Home</a></li>
 
-
-      
-        @*<ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a href="/Home/Index">Dashboard</a>
-            </li>
-            <li class="breadcrumb-item active">Add Users</li>
+            <li><i class="fa fa-angle-right"></i> Add Users</li>
         </ol>
-        <div class="row">
-            <div class="col-12">
-                <h1 style="color:#868e96; font-weight:bold;">ADD USERS</h1>
-
-                <form id="myform">
-
-                    <div class="form-group col-3">
-                        <label>Email address</label>
-                        <input type="email" class="form-control" placeholder="Enter E-Mail" required>
-                    </div>
-                    <div class="form-group col-3">
-                        <label>Password</label>
-                        <input type="password" class="form-control" placeholder="Enter Password" required>
-                    </div>
-                    <div class="form-group col-3">
-                        <label>Confirm Password</label>
-                        <input type="password" class="form-control" placeholder="Enter Confirm Password" required>
-                    </div>
-
-                    <div class="form-group col-3">
-                        <label>Role</label>
-                        <select class="form-control" required>
-                            <option>ADMIN</option>
-                            <option>STUDENT</option>
-                            
-                        </select>
-                    </div>
-
-                    <button type="submit" class="btn btn-success">ADD USER</button>
-
-                </form>
+    </section>
 
 
 
 
 
+    @*<ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/Home/Index">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item active">Add Users</li>
+                </ol>
+                <div class="row">
+                    <div class="col-12">
+                        <h1 style="color:#868e96; font-weight:bold;">ADD USERS</h1>
+
+                        <form id="myform">
+
+                            <div class="form-group col-3">
+                                <label>Email address</label>
+                                <input type="email" class="form-control" placeholder="Enter E-Mail" required>
+                            </div>
+                            <div class="form-group col-3">
+                                <label>Password</label>
+                                <input type="password" class="form-control" placeholder="Enter Password" required>
+                            </div>
+                            <div class="form-group col-3">
+                                <label>Confirm Password</label>
+                                <input type="password" class="form-control" placeholder="Enter Confirm Password" required>
+                            </div>
+
+                            <div class="form-group col-3">
+                                <label>Role</label>
+                                <select class="form-control" required>
+                                    <option>ADMIN</option>
+                                    <option>STUDENT</option>
+
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn btn-success">ADD USER</button>
+
+                        </form>
 
 
-</div>
-        </div>*@
 
-      
-        <div class="card card-login mx-auto mt-5">
-            <div class="card-header" style="color:rgb(53, 53, 53); font-weight:bold;">Create A New User.</div>
-            <div class="card-body">
 
-                @using (Html.BeginForm("AddUser", "Home", FormMethod.Post, new { @class = "form-group", role = "form" }))
-                {
-                    @Html.AntiForgeryToken()
-                    @*<h4>Create a new account.</h4>
+
+
+
+        </div>
+                </div>*@
+
+
+    <div class="card card-login mx-auto mt-5">
+        <div class="card-header bg-blue-gradient text-black" style="color:#2f3742; font-weight:600;">Create A New User.</div>
+        <div class="card-body">
+
+            @using (Html.BeginForm("AddUser", "Home", FormMethod.Post, new { @class = "form-group", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @*<h4>Create a new account.</h4>
                     <hr />*@
-                    @Html.ValidationSummary("", new { @class = "text-danger" })
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Email)
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email)
 
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
 
-                    </div>
+                </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.Password)
 
@@ -99,32 +113,25 @@
 
                     <div class="form-group">
 
-                        <input type="submit" class="btn btn-success btn-block" value="Register" />
+                        <input type="submit" class="btn btn-primary btn-block" value="Register" />
 
                     </div>
                     <br />
 
-                    if(ViewBag.msg == "Account Successfully Created..")
-                    {
-                        <div class="alert alert-success alert-block">
+                if (ViewBag.msg == "Account Successfully Created..")
+                {
+                    <div class="alert alert-success alert-block">
 
-                            <h6 class="alert-heading">@ViewBag.msg</h6>
-                        </div>
-
-                    }
-
-
-
+                        <h6 class="alert-heading">@ViewBag.msg</h6>
+                    </div>
 
                 }
-
-             
-            </div>
-
-
+                
+            }
 
         </div>
-
-
     </div>
+</div>
+
+
 

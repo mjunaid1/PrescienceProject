@@ -2221,7 +2221,7 @@ courseApp.controller('StartExamModalInstanceCtrl', function ($scope, $http, $uib
     var previous = 0;
     $scope.ViewAllQuestionAndAnswers = [];
     $scope.Correct = [];
-    
+    $scope.okbtn = false;
     $scope.previous_show = false;
     $scope.submitbtn = false;
     $scope.next_show = true;
@@ -2442,7 +2442,7 @@ courseApp.controller('StartExamModalInstanceCtrl', function ($scope, $http, $uib
 
                 });
              //   alert("QuestionId: " + $scope.StudentAnswers.QusestionId + "AnswerId: " + $scope.StudentAnswers.Answerid + "Answer: " + $scope.StudentAnswers.CorrectAnswer);
-                alert(records);
+             //   alert(records);
                 var result = Iscorrect / totalQuestions * 100;
 
             //    alert("Wrong is: " + IsWrong + " and Right is: " + Iscorrect + ", Total:" + totalQuestions + " % is " + result + "%");
@@ -2480,7 +2480,7 @@ courseApp.controller('StartExamModalInstanceCtrl', function ($scope, $http, $uib
                     $scope.per = result;
 
                     $scope.Isresults = true;
-                   
+                    $scope.okbtn = true;
                 }
 
 

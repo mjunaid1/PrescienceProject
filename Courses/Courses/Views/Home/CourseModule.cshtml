@@ -1,27 +1,49 @@
 ﻿
 @{
     ViewBag.Title = "CourseModule";
-
+    Layout = "~/Views/Shared/New_Course_Layout.cshtml";
 }
 
 
     <div class="container-fluid">
         <!-- Breadcrumbs-->
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a href="/Home/Index">Dashboard</a>
-            </li>
-            <li class="breadcrumb-item active">Course Module</li>
-        </ol>
+        <section class="content-header sty-one">
+            <h1 class="text-black">
+                Course Module
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="/Home/Index">Home</a></li>
+
+                <li><i class="fa fa-angle-right"></i> Course Module</li>
+            </ol>
+        </section>
 
 
         <form ng-show="isAdmin"  id="myform" class="form-horizontal">
             <div class="row">
                 <div class="col-12">
 
-                    <H1 style="color:rgb(53, 53, 53); font-weight:bold;">Course Module</H1>
-                    <br />
-                    <label> COURSE NAME: </label>
+                    @*<H1 style="color:rgb(53, 53, 53); font-weight:bold;">Course Module</H1>*@
+                 
+                    <div class="col-lg-3">
+                        <fieldset class="form-group">
+                            <label>COURSE NAME: </label>
+                            <select id="selectedCourses" ng-model="selectedCourses" class="selectpicker">
+
+
+
+                                <option ng-repeat="x in getAllCourses" value="{{x.CourseID}}">{{x.CourseName}}</option>
+
+
+                            </select>
+
+                        </fieldset>
+                    </div>
+
+
+
+
+                    @*<label> COURSE NAME: </label>
 
                     <select  id="selectedCourses" ng-model="selectedCourses" class="selectpicker col-3">
 
@@ -30,7 +52,7 @@
                         <option ng-repeat="x in getAllCourses" value="{{x.CourseID}}">{{x.CourseName}}</option>
 
 
-                    </select>
+                    </select>*@
                     <br />
 
 
@@ -53,7 +75,7 @@
                             </div>
                             <br />
                             <div class="form-actions">
-                                <input type="submit" ng-click="InsertCourseModule()" value="SAVE" class="btn btn-success">
+                                <input type="submit" ng-click="InsertCourseModule()" value="SAVE" class="btn btn-primary">
 
                             </div>
                             <br />
@@ -69,17 +91,18 @@
                             <!-- Example DataTables Card-->
                             <div class="card mb-3 ">
                                 <div class="card-header">
-                                    <i class="fa fa-table "></i><span style="color:#868e96; font-weight:bold;"> Course-Module </span> Table
+                                    <i class="fa fa-table "></i><span style="color:#2f3742; font-weight:bold;"> Course-Module </span> Table
                                 </div>
                                 <div class="card-body ">
                                     <div class="table-responsive table-sm">
                                         <table class="table table-bordered table-striped" cellspacing="0">
-                                            <thead class="table-info">
+                                            <thead class="bg-blue-gradient text-black" style="font-weight:normal">
                                                 <tr>
                                                     @*<th>COURSE ID</th>*@
                                                     <th>COURSE NAME</th>
                                                     @*<th>MODULE ID</th>*@
                                                     <th>MODULE NAME</th>
+                                                    <th>VIEW CONTENT</th>
 
 
                                                 </tr>
@@ -91,7 +114,7 @@
                                                     <td>{{x.CourseName}}</td>
                                                     @*<td>{{x.GetModuleId}}</td>*@
                                                     <td>{{x.ModuleName}}</td>
-
+                                                    <td><a href="" ng-click="ShowContent(x.CourseName,x.ModuleName,x.GetModuleId)">View Content</a></td>
 
                                                 </tr>
 
@@ -118,20 +141,39 @@
             <div class="row">
                 <div class="col-12">
 
-                    <H1 style="color:rgb(53, 53, 53); font-weight:bold;">Course Module</H1>
-                    <br />
-                    <label> COURSE NAME: </label>
+                    @*<H1 style="color:rgb(53, 53, 53); font-weight:bold;">Course Module</H1>*@
+                  
+                    <div class="col-lg-3">
+                        <fieldset class="form-group">
+                            <label> COURSE NAME: </label>
+                            <select id="selectedTeacherCourses" ng-model="selectedTeacherCourses" class="selectpicker ">
 
-                    <select id="selectedTeacherCourses" ng-model="selectedTeacherCourses" class="selectpicker col-3">
+
+
+                                <option ng-repeat="x in getAllSingleTeachersCourses" value="{{x.CourseID}}">{{x.CourseName}}</option>
+
+
+                            </select>
+
+                        </fieldset>
+                    </div>
+
+
+
+
+
+                    @*<label>COURSE NAME:  </label>
+
+                    <select id="selectedTeacherCourses" ng-model="selectedTeacherCourses" class="selectpicker ">
 
 
 
                         <option ng-repeat="x in getAllSingleTeachersCourses" value="{{x.CourseID}}">{{x.CourseName}}</option>
 
 
-                    </select>
+                    </select>*@
                    
-                    <div class="form-group col-3">
+                    <div class="col-lg-3">
                         <label>Module Name</label>
                         <input type="text" required ng-model="TModuleName" class="form-control" placeholder="MODULE NAME">
                     </div>
@@ -154,7 +196,7 @@
                           
                             <br />
                             <div class="form-actions">
-                                <input type="submit" ng-click="InsertCourseModuleForTeacher()" value="SAVE" class="btn btn-success">
+                                <input type="submit" ng-click="InsertCourseModuleForTeacher()" value="SAVE" class="btn btn-primary">
 
                             </div>
                             <br />
@@ -170,12 +212,12 @@
                             <!-- Example DataTables Card-->
                             <div class="card mb-3 ">
                                 <div class="card-header">
-                                    <i class="fa fa-table "></i><span style="color:#868e96; font-weight:bold;"> Course-Module </span> Table
+                                    <i class="fa fa-table "></i><span style="color:#2f3742; font-weight:bold;"> Course-Module </span> Table
                                 </div>
                                 <div class="card-body ">
                                     <div class="table-responsive table-sm">
                                         <table class="table table-bordered table-striped" cellspacing="0">
-                                            <thead class="table-info">
+                                            <thead class="bg-blue-gradient text-black" style="font-weight:normal">
                                                 <tr>
                                                     @*<th>COURSE ID</th>*@
                                                     <th>COURSE NAME</th>
@@ -238,13 +280,13 @@
 
                     <div  ng-show="showtable" class="card mb-3 ">
                         <div class="card-header">
-                            <i class="fa fa-table "></i><span style="color:#868e96; font-weight:bold;"> DROPBOX CONTENT </span> 
+                            <i class="fa fa-table "></i><span style="color:#2f3742; font-weight:bold;"> DROPBOX CONTENT </span> 
                         </div>
 
                         <div class="card-body ">
                             <div class="table-responsive table-sm">
                                 <table class="table table-bordered table-striped" cellspacing="0">
-                                    <thead class="table-info">
+                                    <thead class="bg-blue-gradient text-black" style="font-weight:normal">
                                         <tr>
                                           
                                             <th>DROPBOX CONTENT NAME</th>
@@ -296,7 +338,8 @@
             </div>
             <div class="modal-footer">
                 @*<button class="btn btn-primary" type="button" ng-click="">Save</button>*@
-                <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+                @*<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>*@
+                <button class="btn btn-primary" type="button" ng-click="cancel()">Ok</button>
             </div>
 
         </script>
@@ -326,9 +369,9 @@
                 <img id="loadingImg" style="display:none" src="~/Content/Logo/loader-bar.gif" />
                          
              }
-                <span style="color:red;font-size:small">* File Should be in 150mb
+                <span style="color:red;font-size:small">* File Size Should be less than 150 MB 
                 <br/>
-               * Only Accept PDF OR MP4 Format 
+               * Only PDF and MP4 File are allowed
                 </span>
 
                 @*<form id="uploader">
@@ -339,7 +382,8 @@
             </div>
             <div class="modal-footer">
                 @*<button class="btn btn-primary" type="button" ng-click="">Save</button>*@
-                <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+                @*<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>*@
+                <button class="btn btn-primary" type="button" ng-click="cancel()">Ok</button>
             </div>
 
         </script>
@@ -379,7 +423,8 @@
             </div>
             <div class="modal-footer">
                 @*<button class="btn btn-primary" type="button" ng-click="">Save</button>*@
-                <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+                @*<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>*@
+                <button class="btn btn-primary" type="button" ng-click="cancel()">Ok</button>
             </div>
 
         </script>
@@ -401,7 +446,7 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
-                    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+                    @*<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>*@
                 </div>
             </div>
         </script>

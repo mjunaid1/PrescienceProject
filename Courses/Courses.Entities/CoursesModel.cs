@@ -289,7 +289,22 @@ namespace Courses.Entities
         public string Records { get; set; }
 
 
+        public Results()
+        {
 
+
+
+
+        }
+
+        public Results(IDataReader dbReader)
+        {
+            if (dbReader == null) return;
+            if (dbReader.HasColumn("ResultId") && dbReader["ResultId"] != DBNull.Value) ResultId = (int)dbReader["ResultId"];
+        
+
+
+        }
 
     }
 
