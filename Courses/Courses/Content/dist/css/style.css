@@ -110,7 +110,7 @@ a:hover, a:active, a:focus {
 .main-footer {
 	background: #fff;
 	padding: 15px;
-	color: #444;
+	color: black;
 	font-size: 13px;
 	border-top: 1px solid #d2d6de
 }
@@ -3222,7 +3222,7 @@ ul.plan-list li{
 	border-color: #00733e
 }
 .alert {
-	border-radius: 3px
+	border-radius: 8px
 }
 .alert h4 {
 	font-weight: 600
@@ -3255,9 +3255,9 @@ ul.plan-list li{
 .alert-info {
 	border-color: #00acd6
 }
-.nav>li>a:hover, .nav>li>a:active, .nav>li>a:focus {
-	color: #fff;
-	background: #4757d1
+.nav > li > a:hover, .nav > li > a:active, .nav > li > a:focus {
+    color: #fff;
+    background: #4757d1
 }
 .nav-pills>li>a {
 	border-radius: 0;
@@ -3892,11 +3892,11 @@ table.text-center, table.text-center td, table.text-center th {
 	font-size: 13px;
 	color: #80878f;
 }
-.treeview-menu>li>a:hover, .treeview-menu>li.active a {
-	color: #008cd3;
-}
+    .treeview-menu > li > a:hover, .treeview-menu > li.active a {
+        color: #00a79d;
+    }
 .treeview-menu>li>a>.fa, .treeview-menu>li>a>.glyphicon, .treeview-menu>li>a>.ion {
-	width: 20px
+	width: 25px
 }
 .treeview-menu>li>a>.pull-right-container>.fa-angle-left, .treeview-menu>li>a>.pull-right-container>.fa-angle-down, .treeview-menu>li>a>.fa-angle-left, .treeview-menu>li>a>.fa-angle-down {
 	width: auto

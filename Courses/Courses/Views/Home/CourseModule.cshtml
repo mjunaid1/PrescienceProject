@@ -9,7 +9,7 @@
         <!-- Breadcrumbs-->
         <section class="content-header sty-one">
             <h1 class="text-black">
-                Course Module
+                Course Module <i style="font-size:x-large" class="fa fa-cubes"></i>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="/Home/Index">Home</a></li>
@@ -75,7 +75,7 @@
                             </div>
                             <br />
                             <div class="form-actions">
-                                <input type="submit" ng-click="InsertCourseModule()" value="SAVE" class="btn btn-primary">
+                                <input type="submit" ng-click="InsertCourseModule()" value="SAVE" class="btn btn-default bg-teal text-black">
 
                             </div>
                             <br />
@@ -96,7 +96,7 @@
                                 <div class="card-body ">
                                     <div class="table-responsive table-sm">
                                         <table class="table table-bordered table-striped" cellspacing="0">
-                                            <thead class="bg-blue-gradient text-black" style="font-weight:normal">
+                                            <thead class="bg-teal-gradient text-black" style="font-weight:normal">
                                                 <tr>
                                                     @*<th>COURSE ID</th>*@
                                                     <th>COURSE NAME</th>
@@ -196,7 +196,7 @@
                           
                             <br />
                             <div class="form-actions">
-                                <input type="submit" ng-click="InsertCourseModuleForTeacher()" value="SAVE" class="btn btn-primary">
+                                <input type="submit" ng-click="InsertCourseModuleForTeacher()" value="SAVE" class="btn btn-default bg-teal text-black">
 
                             </div>
                             <br />
@@ -217,7 +217,7 @@
                                 <div class="card-body ">
                                     <div class="table-responsive table-sm">
                                         <table class="table table-bordered table-striped" cellspacing="0">
-                                            <thead class="bg-blue-gradient text-black" style="font-weight:normal">
+                                            <thead class="bg-teal-gradient text-black" style="font-weight:normal">
                                                 <tr>
                                                     @*<th>COURSE ID</th>*@
                                                     <th>COURSE NAME</th>
@@ -349,7 +349,7 @@
 
             <div class="modal-header">
 
-                <h4 class="modal-title">{{modalTitle}}</h4>
+                <h4 class="modal-title" >{{modalTitle}}</h4>
             </div>
             <div class="modal-body">
            
@@ -369,19 +369,20 @@
                 <img id="loadingImg" style="display:none" src="~/Content/Logo/loader-bar.gif" />
                          
              }
-                <span style="color:red;font-size:small">* File Size Should be less than 150 MB 
-                <br/>
-               * Only PDF and MP4 File are allowed
-                <br />
-               * If File Size Greater Then 150 MB Please Use Dropbox Explorer To Upload File.
-                </span>
 
-                @*<form id="uploader">
-                    <input id="fileInput" type="file" multiple>
-                    <input type="submit" value="Upload file" />
-                </form>*@
+                <div class="alert alert-warning  text-black" role="alert" style="font-weight:500"> * File Size Should be less than 150 MB.  </div>
+                
+                <div class="alert alert-warning  text-black" role="alert" style="font-weight:500"> * Only PDF and MP4 File are allowed.  </div>
+                
+                <div class="alert alert-warning  text-black" role="alert" style="font-weight:500"> * If File Size Greater Then 150 MB Please Use Dropbox  Explorer To Upload File. </div>
 
-            </div>
+
+                    @*<form id="uploader">
+                <input id="fileInput" type="file" multiple>
+                <input type="submit" value="Upload file" />
+            </form>*@
+
+</div>
             <div class="modal-footer">
                 @*<button class="btn btn-primary" type="button" ng-click="">Save</button>*@
                 @*<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>*@

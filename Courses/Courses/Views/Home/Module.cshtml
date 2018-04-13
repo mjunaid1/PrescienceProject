@@ -8,7 +8,7 @@
         <!-- Breadcrumbs-->
         <section class="content-header sty-one">
             <h1 class="text-black">
-                Module
+                Module <i style="font-size:x-large" class="fa fa-cube"></i>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="/Home/Index">Home</a></li>
@@ -35,7 +35,7 @@
                         <input type="text" ng-model="ModuleName"  class="form-control" placeholder="MODULE NAME" >
                         <button type="submit" ng-click="AddModules()" class="btn btn-success">SUBMIT</button>
                     </div>*@
-                    <button type="submit" ng-click="AddModules()" class="btn btn-primary">SUBMIT</button>
+                    <button type="submit" ng-click="AddModules()" class="btn btn-default bg-teal text-black">SUBMIT</button>
                 </form>
                 <br />
                 <div class="alert alert-success alert-block" ng-show="isSuccess">
@@ -56,7 +56,7 @@
                     <div class="card-body">
                         <div class="table-responsive table-sm">
                             <table class="table table-bordered table-striped" cellspacing="0">
-                                <thead class="bg-blue-gradient text-black" style="font-weight:normal">
+                                <thead class="bg-teal-gradient text-black" style="font-weight:normal">
                                     <tr>
                                         <th>MODULE NAME</th>
 
