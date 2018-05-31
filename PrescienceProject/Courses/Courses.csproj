@@ -773,8 +773,11 @@
     <Content Include="Content\dist\css\weather\font\weathericons-regular-webfont.svg" />
     <Content Include="Content\dist\css\weather\weather-icons-wind.min.css" />
     <Content Include="Content\dist\css\weather\weather-icons.min.css" />
+    <Content Include="Content\dist\img\1AC LOGO.png" />
     <Content Include="Content\dist\img\1ilfwhite - Copy.png" />
     <Content Include="Content\dist\img\1ilfwhite.png" />
+    <Content Include="Content\dist\img\2AC LOGO.png" />
+    <Content Include="Content\dist\img\AC LOGO.png" />
     <Content Include="Content\dist\img\american-express.png" />
     <Content Include="Content\dist\img\blue-logout.png" />
     <Content Include="Content\dist\img\body-bg.jpg" />
@@ -942,6 +945,7 @@
     <Content Include="Content\Login IMG\log1 %283%29.jpg" />
     <Content Include="Content\Login IMG\log1 %283%29.png" />
     <Content Include="Content\Login IMG\log1 ss%283%29.png" />
+    <Content Include="Content\Login IMG\LoginImage01.png" />
     <Content Include="Content\Login IMG\spread-of-education-3245801_960_720.jpg" />
     <Content Include="Content\Logo\loader-bar.gif" />
     <Content Include="Content\Logo\14.png" />
